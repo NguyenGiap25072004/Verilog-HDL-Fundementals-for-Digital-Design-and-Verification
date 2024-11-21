@@ -1,0 +1,27 @@
+<p><strong>Why am I getting sum=x?</strong></p><p>(thanks to Muddada Prasanth)</p><pre class="prettyprint linenums">module procedures();
+reg [7:0] a,b;
+reg [15:0] prod;
+wire [8:0] sum;
+
+assign sum=a+b;
+
+always @(a or b) begin
+    prod=a*b;
+end
+
+always @(a) begin
+    $display ("a=%0d",a);
+end
+
+always @(*) begin
+    $display("a=%0d,b=%0d,sum=%0d,prod=%0d", a,b,sum,prod);
+end
+
+initial begin
+    #1; a=10;b=99;
+    #1; b=33;
+    #1; a=b&lt;&lt;2;
+    #1; b=b&gt;&gt;3;
+    #1; b=b+1;
+end
+endmodule</pre><p><br></p><p>The a, b, prod, sum have the value X (unknown) until 1ns because a=10; b=99 is executed after 1ns.</p><p>Until that time the default values of all variables is X (unknown) by default.</p><figure><img src="https://img-c.udemycdn.com/redactor/raw/article_lecture/2023-01-29_13-53-59-a8424d08f90cb7e060822a8e6c333962.png"></figure>

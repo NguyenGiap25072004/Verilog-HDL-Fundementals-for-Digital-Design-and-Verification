@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz</title>
+
+  <style>
+    body {
+      font-family: sf pro text, -apple-system, BlinkMacSystemFont, Roboto,
+        segoe ui, Helvetica, Arial, sans-serif, apple color emoji,
+        segoe ui emoji, segoe ui symbol;
+      font-weight: 400;
+      line-height: 22.4px;
+      font-size: 16px;
+    }
+
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    ul,
+    ol {
+      font-size: 16px;
+      font-weight: 400;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      max-width: none;
+    }
+
+    code {
+      background-color: #fff;
+      border: 1px solid #d1d7dc;
+      color: #b4690e;
+      font-size: 90%;
+      padding: 0.2rem 0.4rem;
+    }
+
+    .quiz-content {
+      padding: 2.4rem;
+      word-break: break-word;
+      max-width: 86rem;
+      margin: 0 auto;
+    }
+
+    .quiz-container {
+      margin: 0 auto;
+      max-width: 84rem;
+      padding: 0;
+    }
+
+    .question {
+      margin-bottom: 5rem;
+    }
+
+    .question span {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .question-prompt {
+      margin-top: 0.8rem;
+      font-weight: 700;
+    }
+
+    .question-answer {
+      margin-top: 1.6rem;
+      padding-left: 0;
+      box-sizing: border-box;
+    }
+
+    .question-answer label {
+      max-width: 80rem;
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      min-width: 18rem;
+      border: solid #1c1d1f 2px;
+    }
+
+    .question-answer div {
+      padding: 0.5rem;
+      width: 100%;
+    }
+
+    .question-answer div:hover {
+      background-color: #f5f5f5;
+    }
+
+    /* .question-answer input {
+      display: none;
+    } */
+
+    .question-answer span {
+      width: 1rem;
+      height: 1rem;
+      margin-right: 1.6rem;
+      top: 0;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+      border: 0.2rem solid #1c1d1f;
+      position: relative;
+    }
+
+    .selected {
+      background: #1c1d1f;
+      box-shadow: 0 0 0 0.4rem #fff inset;
+    }
+
+    .score {
+      position: fixed;
+      background-color: #b4690e;
+      padding: 10px;
+      color: white;
+    }
+  </style>
+</head>
+
+<body onload="main()">
+  <div id="score" class="score">
+    <span>Score: N/A of N/A</span>
+  </div>
+  <div id="quiz-container" class="quiz-content"></div>
+
+  <script>
+    const quizData = {"pass_percent": 70, "questions": [{"_class": "assessment", "id": 58567170, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What data type should we choose for <strong>my_var</strong>?</p><p><code>assign my_var[3:0] = (busa[3:0] ^ busb[3:0]) &amp; bit_mask[7:4]</code> </p>", "relatedLectureIds": ["28254900"], "feedbacks": ["You will get a compile error on most simulators.", "Almost the perfect answer but something is missing", "CORRECT: continuous assignment always use the wire type", "You will get compilation errors"], "answers": ["<p>reg my_var;</p>", "<p>wire my_var;</p>", "<p>wire [3:0] my_var;</p>", "<p>it can be any data type</p>"]}, "correct_response": ["c"], "section": "", "question_plain": "What data type should we choose for my_var?assign my_var[3:0] = (busa[3:0] ^ busb[3:0]) &amp; bit_mask[7:4]", "related_lectures": [{"_class": "lecture", "id": 28254900, "title": "Discover Continuous assignments", "created": "2021-08-30T11:51:30Z", "is_published": true, "asset": {"_class": "asset", "id": 36370758, "asset_type": "Video", "title": "07.02_Discover_Consinuous_assignments.mp4", "created": "2021-09-22T07:07:10Z"}, "object_index": 98, "url": "/course/verilog-hdl-fundamentals-for-digital-design-and-verification/learn/lecture/28254900"}]}, {"_class": "assessment", "id": 58567480, "assessment_type": "multiple-choice", "prompt": {"question": "<p>How are the following lines of code executing inside the following procedural assignment?</p><pre class=\"prettyprint linenums\">initial begin\n    a = 1;\n    c = 2;\n    d = (a + c) * 2;\nend</pre>", "relatedLectureIds": ["28255150"], "feedbacks": ["CORRECT: The code lines that use the blocking operator = are execute sequentially", "This is not the correct answer", "We need predictability so this cannot be the correct answer"], "answers": ["<p>Sequentially</p>", "<p>In parallel</p>", "<p>In any order</p>"]}, "correct_response": ["a"], "section": "", "question_plain": "How are the following lines of code executing inside the following procedural assignment?initial begin\n    a = 1;\n    c = 2;\n    d = (a + c) * 2;\nend", "related_lectures": [{"_class": "lecture", "id": 28255150, "title": "Discover Procedural Assignments", "created": "2021-08-30T12:03:46Z", "is_published": true, "asset": {"_class": "asset", "id": 36370778, "asset_type": "Video", "title": "07.05_Discover_Procedural_Assignments.mp4", "created": "2021-09-22T07:08:39Z"}, "object_index": 101, "url": "/course/verilog-hdl-fundamentals-for-digital-design-and-verification/learn/lecture/28255150"}]}, {"_class": "assessment", "id": 58567748, "assessment_type": "multiple-choice", "prompt": {"question": "<p>Which of the following statements about Verilog <strong>parameters </strong>is false?</p>", "relatedLectureIds": ["28255262"], "feedbacks": ["This is the sole FALSE statement. Parameters bring great advantages for both Design and Verification", "", "", "", ""], "answers": ["<p>There are no advantages using parameters</p>", "<p>We can create generic modules</p>", "<p>Design reuse for different specifications</p>", "<p>Parameters are constant and cannot change during runtime</p>", "<p>You can change a parameter value at module instantiation</p>"]}, "correct_response": ["a"], "section": "", "question_plain": "Which of the following statements about Verilog parameters is false?", "related_lectures": [{"_class": "lecture", "id": 28255262, "title": "Discover the Nbit Adder", "created": "2021-08-30T12:09:30Z", "is_published": true, "asset": {"_class": "asset", "id": 36395548, "asset_type": "Video", "title": "07.07_Discover_the_Nbit_adder.mp4", "created": "2021-09-23T09:53:14Z"}, "object_index": 103, "url": "/course/verilog-hdl-fundamentals-for-digital-design-and-verification/learn/lecture/28255262"}]}, {"_class": "assessment", "id": 58568084, "assessment_type": "multiple-choice", "prompt": {"question": "<p>You want to design some combinational logic that uses multiple inputs. What is the best practice for coding the sensitivity list?</p>", "relatedLectureIds": "", "feedbacks": ["If you forget an input from the sensitivity list then the behavior will be faulty", "CORRECT: This is best RTL coding technique for combinational circuits", "If you forget an input from the sensitivity list then the behavior will be faulty"], "answers": ["<p>always@(a, b, c, ...)</p>", "<p>always@(*)</p>", "<p>always@(a or b or c or ...)</p>"]}, "correct_response": ["b"], "section": "", "question_plain": "You want to design some combinational logic that uses multiple inputs. What is the best practice for coding the sensitivity list?", "related_lectures": []}, {"_class": "assessment", "id": 58568880, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What is the difference between Arithmetic Shift and Logical Shift?</p>", "relatedLectureIds": ["28257026"], "feedbacks": ["Certainly there is one. Keep trying", "CORRECT: This is the exact definition of the Arithmetic Shift", "This is wat happens in Logical Shift", "This is happening in Rotate Through Carry"], "answers": ["<p>There is no difference</p>", "<p>In Arithmetic Shift the sign bit is preserved in the MSB </p>", "<p>In Arithmetic Shift the MSB is always 0</p>", "<p>In Arithmetic Shift the sign is passed to the carry</p>"]}, "correct_response": ["b"], "section": "", "question_plain": "What is the difference between Arithmetic Shift and Logical Shift?", "related_lectures": [{"_class": "lecture", "id": 28257026, "title": "How to use digital logic for arithmetic operations", "created": "2021-08-30T13:30:12Z", "is_published": true, "asset": {"_class": "asset", "id": 36395694, "asset_type": "Video", "title": "07.24_Use_digital_logic_for_arithmetic_operations.mp4", "created": "2021-09-23T09:59:05Z"}, "object_index": 124, "url": "/course/verilog-hdl-fundamentals-for-digital-design-and-verification/learn/lecture/28257026"}]}]};
+    var correct = 0;
+    var total = 0;
+    const questionData = quizData.questions
+    const passPercent = quizData.pass_percent
+    function kiemTraDapAn(correctMuti, choise) {
+      // Chuyển đổi các số trong choise thành chữ cái tương ứng
+      const choiseLetters = choise.map(num => String.fromCharCode(parseInt(num) + 'a'.charCodeAt(0)));
+      console.log('choiseLetters',choiseLetters)
+      // Kiểm tra điều kiện:
+      // 1. Chiều dài hai mảng phải bằng nhau
+      // 2. Tất cả các phần tử trong choiseLetters phải có trong correctMuti
+      if (
+        choiseLetters.length === correctMuti.length &&
+        choiseLetters.every(c => correctMuti.includes(c))
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    function main() {
+      total = questionData.length;
+
+      var questions = [];
+      for (var i = 0; i < questionData.length; i++) {
+        var question = questionData[i];
+        var questionText = question.prompt.question;
+        var answers = question.prompt.answers;
+        var correctAnswer = question.correct_response[0];
+        var correctMuti = question.correct_response;
+        var correctAnswerText = answers[correctAnswer.charCodeAt(0) - 97];
+        var questionObj = {
+          question: questionText,
+          correctAnswer: correctAnswerText,
+          answers: answers,
+          id: question.id,
+          explanation: question.prompt.explanation,
+          correctMuti
+
+        };
+        questions.push(questionObj);
+      }
+      console.log(questions.filter(i => i.correctMuti.length > 1))
+
+      updateScore();
+
+      // display the questions
+      var questionsContainer = document.getElementById("quiz-container");
+      for (var i = 0; i < questions.length; i++) {
+        var question = questions[i];
+        var questionElement = document.createElement("form");
+        questionElement.className = "question";
+        questionElement.innerHTML =
+          "<span>Question " +
+          (i + 1) +
+          ":</span>" +
+          '<div class="question-prompt">' +
+          question.question +
+          "</div>";
+        questionElement.id = question.id;
+        questionElement.classList.add("quiz-container");
+        var answersElement = document.createElement("ul");
+        answersElement.className = "answers";
+        console.log('question.correctMuti', question.correctMuti.length)
+        if (question.correctMuti.length > 1) {
+          for (var j = 0; j < question.answers.length; j++) {
+            var answer = question.answers[j];
+            var answerElement = document.createElement("li");
+            answerElement.className = "answer";
+            answerElement.innerHTML =
+              '<label for="input-' +
+              question.id +
+              "-" +
+              j +
+              '"><div onclick="select2(' +
+              question.id +
+              ", " +
+              j +
+              ')"><input id="input-' +
+              question.id +
+              "-" +
+              j +
+              '" type="checkbox" name="question' +
+              i +
+              '" value="' +
+              j +
+              '">' +
+              answer +
+              "</input></div></label>";
+            answerElement.classList.add("question-answer");
+            answersElement.appendChild(answerElement);
+          }
+        } else {
+          for (var j = 0; j < question.answers.length; j++) {
+            var answer = question.answers[j];
+            var answerElement = document.createElement("li");
+            answerElement.className = "answer";
+            answerElement.innerHTML =
+              '<label for="input-' +
+              question.id +
+              "-" +
+              j +
+              '"><div onclick="select(' +
+              question.id +
+              ", " +
+              j +
+              ')"><span></span><input id="input-' +
+              question.id +
+              "-" +
+              j +
+              '" type="radio" name="question' +
+              i +
+              '" value="' +
+              j +
+              '">' +
+              answer +
+              "</input></div></label>";
+            answerElement.classList.add("question-answer");
+            answersElement.appendChild(answerElement);
+          }
+        }
+        questionElement.appendChild(answersElement);
+
+        // add a submit button
+        var submitButton = document.createElement("button");
+        submitButton.className = "submit";
+        submitButton.innerHTML = "Submit";
+        submitButton.classList.add("submit-button");
+
+        submitButton.addEventListener("click", function (e) {
+          e.preventDefault();
+          var questionElement = e.target.parentElement;
+          var questionId = questionElement.id;
+          var question = questions.filter(function (q) {
+            return q.id == questionId;
+          })[0];
+
+          // set the border color of all answers to black
+          var answers = questionElement.getElementsByClassName("answer");
+          for (var i = 0; i < answers.length; i++) {
+            console.log(answers[i]);
+            answers[i].children[0].style.borderColor = "#1c1d1f";
+          }
+
+          var answer = questionElement.querySelector(
+            'input[type="radio"]:checked'
+          );
+          var mutilanswer = questionElement.querySelectorAll(
+            'input[type="checkbox"]:checked'
+          );
+          if (answer) {
+            var answerIndex = answer.value;
+            var answerText = question.answers[answerIndex];
+            if (answerText == question.correctAnswer) {
+              answer.parentElement.parentElement.style.borderColor =
+                "limegreen";
+              // alert("Correct!");
+              correct++;
+              updateScore();
+              questionElement.innerHTML += question.explanation
+
+            } else {
+              answer.parentElement.parentElement.style.borderColor = "red";
+              // alert("Incorrect!");
+            }
+          }
+          if (mutilanswer) {
+            var answerIndex = [...mutilanswer].map(a => a.value);
+
+            if (kiemTraDapAn(question.correctMuti, answerIndex)) {
+              [...mutilanswer].map(item => {
+                item.parentElement.parentElement.style.borderColor =
+                "limegreen";
+              })
+              // alert("Correct!");
+              correct++;
+              updateScore();
+              questionElement.innerHTML += question.explanation
+            } else {
+              [...mutilanswer].map(item => {
+                item.parentElement.parentElement.style.borderColor =
+                "red";
+              })
+            }
+            // var answerText = question.answers[answerIndex];
+            // if (answerText == question.correctAnswer) {
+            //   answer.parentElement.parentElement.style.borderColor =
+            //     "limegreen";
+            //   // alert("Correct!");
+            //   correct++;
+            //   updateScore();
+            //   questionElement.innerHTML += question.explanation
+
+            // } else {
+            //   answer.parentElement.parentElement.style.borderColor = "red";
+            //   // alert("Incorrect!");
+            // }
+          }
+          // else {
+          //   alert("Please select an answer.");
+          // }
+
+        });
+
+        // add button
+        questionElement.appendChild(submitButton);
+
+        questionsContainer.appendChild(questionElement);
+      }
+    }
+
+    function select(question, answer) {
+      var questionElement = document.getElementById(question);
+      var answers = questionElement.getElementsByClassName("answer");
+      for (var i = 0; i < answers.length; i++) {
+        var span = answers[i].children[0].children[0].children[0];
+        var input = answers[i].children[0].children[0].children[1];
+        span.classList.remove("selected");
+        input.checked = false;
+      }
+      var span = answers[answer].children[0].children[0].children[0];
+      var input = answers[answer].children[0].children[0].children[1];
+      span.classList.add("selected");
+      input.checked = true;
+    }
+    function select2(question, answer) {
+      var questionElement = document.getElementById(question);
+      var answers = questionElement.getElementsByClassName("answer");
+      // for (var i = 0; i < answers.length; i++) {
+      //   var span = answers[i].children[0].children[0].children[0];
+      //   var input = answers[i].children[0].children[0].children[1];
+      //   if(input.checked){
+      //     span.classList.remove("selected");
+      //     input.checked = false;
+      //   }
+
+      // }
+      // var span = answers[answer].children[0].children[0].children[0];
+      // var input = answers[answer].children[0].children[0].children[1];
+      // span.classList.add("selected");
+      // input.checked = true;
+    }
+    function updateScore() {
+      var scoreElem = document.getElementById("score");
+      const score = (correct / total) * 100;
+      scoreElem.innerHTML = "Score: " + score + "/" + passPercent + "%";
+    }
+  </script>
+</body>
+
+</html>

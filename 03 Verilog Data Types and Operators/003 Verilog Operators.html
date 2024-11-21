@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz</title>
+
+  <style>
+    body {
+      font-family: sf pro text, -apple-system, BlinkMacSystemFont, Roboto,
+        segoe ui, Helvetica, Arial, sans-serif, apple color emoji,
+        segoe ui emoji, segoe ui symbol;
+      font-weight: 400;
+      line-height: 22.4px;
+      font-size: 16px;
+    }
+
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    ul,
+    ol {
+      font-size: 16px;
+      font-weight: 400;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      max-width: none;
+    }
+
+    code {
+      background-color: #fff;
+      border: 1px solid #d1d7dc;
+      color: #b4690e;
+      font-size: 90%;
+      padding: 0.2rem 0.4rem;
+    }
+
+    .quiz-content {
+      padding: 2.4rem;
+      word-break: break-word;
+      max-width: 86rem;
+      margin: 0 auto;
+    }
+
+    .quiz-container {
+      margin: 0 auto;
+      max-width: 84rem;
+      padding: 0;
+    }
+
+    .question {
+      margin-bottom: 5rem;
+    }
+
+    .question span {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .question-prompt {
+      margin-top: 0.8rem;
+      font-weight: 700;
+    }
+
+    .question-answer {
+      margin-top: 1.6rem;
+      padding-left: 0;
+      box-sizing: border-box;
+    }
+
+    .question-answer label {
+      max-width: 80rem;
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      min-width: 18rem;
+      border: solid #1c1d1f 2px;
+    }
+
+    .question-answer div {
+      padding: 0.5rem;
+      width: 100%;
+    }
+
+    .question-answer div:hover {
+      background-color: #f5f5f5;
+    }
+
+    /* .question-answer input {
+      display: none;
+    } */
+
+    .question-answer span {
+      width: 1rem;
+      height: 1rem;
+      margin-right: 1.6rem;
+      top: 0;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+      border: 0.2rem solid #1c1d1f;
+      position: relative;
+    }
+
+    .selected {
+      background: #1c1d1f;
+      box-shadow: 0 0 0 0.4rem #fff inset;
+    }
+
+    .score {
+      position: fixed;
+      background-color: #b4690e;
+      padding: 10px;
+      color: white;
+    }
+  </style>
+</head>
+
+<body onload="main()">
+  <div id="score" class="score">
+    <span>Score: N/A of N/A</span>
+  </div>
+  <div id="quiz-container" class="quiz-content"></div>
+
+  <script>
+    const quizData = {"pass_percent": 70, "questions": [{"_class": "assessment", "id": 58224552, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What is the value of <strong>result </strong>after executing this Verilog code?</p><pre class=\"prettyprint linenums\">reg [7:0] a = 0;       \nreg [7:0] b = 0;\nreg [7:0] result = 0; \n\t\ninitial begin\n    a = 8'b1010_1010;\n    b = 8'b0101_0100;\n    result = a | b;\nend</pre>", "relatedLectureIds": ["28194362"], "feedbacks": ["Bit-wise OR of a and b returns an 8bit result.", "CORRECT! The OR between a[i], b[i] (i inside [0:7]) is 8'b11111110", "a[0] | b[0] = 0 | 0 = 0. result[0] is 0 instead of 1."], "answers": ["<p>1. result = 1</p>", "<p>result = 8'b11111110</p>", "<p>result = 8'b11111111</p>"]}, "correct_response": ["b"], "section": "", "question_plain": "What is the value of result after executing this Verilog code?reg [7:0] a = 0;       \nreg [7:0] b = 0;\nreg [7:0] result = 0; \n\t\ninitial begin\n    a = 8'b1010_1010;\n    b = 8'b0101_0100;\n    result = a | b;\nend", "related_lectures": [{"_class": "lecture", "id": 28194362, "title": "Action Time - Bit-wise operators", "created": "2021-08-26T14:31:10Z", "is_published": true, "asset": {"_class": "asset", "id": 36369966, "asset_type": "Video", "title": "03.10_Action_Time_Bit-wise_operators.mp4", "created": "2021-09-22T06:36:09Z"}, "object_index": 27, "url": "/course/verilog-hdl-fundamentals-for-digital-design-and-verification/learn/lecture/28194362"}]}, {"_class": "assessment", "id": 58231058, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What is the value of <strong>result </strong>after executing this Verilog code? </p><pre class=\"prettyprint linenums\">    reg [7:0] a = 0;\n    reg [7:0] b = 0;\n    reg [7:0] result = 0; \n\n    initial begin\n        #1; a = 8'b1110_1010;\n\t    result = ^a;\n    end</pre>", "relatedLectureIds": ["28194516"], "feedbacks": ["The XOR reduction operator gets an ODD number of 1, so the result is 1.", "This would be the result of the NOT bit-wise operator", "CORRECT: result = 8'b0000_0001  ^a = 1 ^ 1 ^1 ^ 0 ^ 1 ^ 0 ^ 1 ^0 = 1 (1 bit value) . result\u00a0 = a means that an 8bit variable is assigned a 1bit value so the LSB (least significant bit) of result will take the value of ^a which is 1'b1"], "answers": ["<p>result = 0</p>", "<p>result = 8'b0001_0101</p>", "<p>result = 8'b0000_0001</p>"]}, "correct_response": ["c"], "section": "", "question_plain": "What is the value of result after executing this Verilog code?     reg [7:0] a = 0;\n    reg [7:0] b = 0;\n    reg [7:0] result = 0; \n\n    initial begin\n        #1; a = 8'b1110_1010;\n\t    result = ^a;\n    end", "related_lectures": [{"_class": "lecture", "id": 28194516, "title": "Verilog Operators - Reduction", "created": "2021-08-26T14:38:51Z", "is_published": true, "asset": {"_class": "asset", "id": 36369982, "asset_type": "Video", "title": "03.11_Verilog_Operators-Reduction.mp4", "created": "2021-09-22T06:36:59Z"}, "object_index": 29, "url": "/course/verilog-hdl-fundamentals-for-digital-design-and-verification/learn/lecture/28194516"}]}, {"_class": "assessment", "id": 58522034, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What is the value of result after executing this Verilog code?</p><pre class=\"prettyprint linenums\">reg [7:0] a = 0;\nreg [7:0] result = 0; \n\t\ninitial begin\n    a = 8'b0000_0X0X;\n    result = (a === 8'bX);\nend</pre>", "relatedLectureIds": ["28196880"], "feedbacks": ["CORRECT: (a === 8'bX) =  (8'b0000_0X0X === 8'b0000_000X) = 0", "8'bX means 8'b0000_000X.  8'b0000_000X differs from 8'b0000_0X0X, so the result cannot be 1", "The result of the case equality operator is always either 0 or 1!"], "answers": ["<p>result = 8'b0000_0000</p>", "<p>result = 8'b0000_0001</p>", "<p>result = 8'bXXXX_XXXX</p>"]}, "correct_response": ["a"], "section": "", "question_plain": "What is the value of result after executing this Verilog code?reg [7:0] a = 0;\nreg [7:0] result = 0; \n\t\ninitial begin\n    a = 8'b0000_0X0X;\n    result = (a === 8'bX);\nend", "related_lectures": [{"_class": "lecture", "id": 28196880, "title": "Verilog Operators - Equality", "created": "2021-08-26T16:40:09Z", "is_published": true, "asset": {"_class": "asset", "id": 36370130, "asset_type": "Video", "title": "03.22_Verilog_Operators-Equality.mp4", "created": "2021-09-22T06:41:30Z"}, "object_index": 43, "url": "/course/verilog-hdl-fundamentals-for-digital-design-and-verification/learn/lecture/28196880"}]}, {"_class": "assessment", "id": 58522622, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What is the value of result after executing this Verilog code?</p><pre class=\"prettyprint linenums\">reg [7:0] a = 0;\nreg [7:0] b = 0;\nreg [7:0] result = 0; \n\ninitial begin\n    a = 8'hCA;\n    b = 8'hFE;\n    result = ({a, b} == 16'hCAFE) ? 16'h600D : 16'h0BAD;\nend</pre>", "relatedLectureIds": ["28206674"], "feedbacks": ["The value of result is 8 bits wide not 16 bits", "The value of result is 8 bits wide not 16 bits", "{a, b} = {8'hCA, 8'hFE} = 16'hCAFE .  The value returned by the conditional operator ? is 16'h600D which is trimmed to 8bits to fit the size of result. result = 8'h0D (the 8 least significant bits))"], "answers": ["<p>result = 16'h600D</p>", "<p>result = 16'h0BAD</p>", "<p>result = 8'h0D</p>"]}, "correct_response": ["c"], "section": "", "question_plain": "What is the value of result after executing this Verilog code?reg [7:0] a = 0;\nreg [7:0] b = 0;\nreg [7:0] result = 0; \n\ninitial begin\n    a = 8'hCA;\n    b = 8'hFE;\n    result = ({a, b} == 16'hCAFE) ? 16'h600D : 16'h0BAD;\nend", "related_lectures": [{"_class": "lecture", "id": 28206674, "title": "Verilog Operators - Concatenation", "created": "2021-08-27T08:36:04Z", "is_published": true, "asset": {"_class": "asset", "id": 36370184, "asset_type": "Video", "title": "03.26_Verilog_Operators_Concatenation.mp4", "created": "2021-09-22T06:43:44Z"}, "object_index": 47, "url": "/course/verilog-hdl-fundamentals-for-digital-design-and-verification/learn/lecture/28206674"}]}, {"_class": "assessment", "id": 58523966, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What is the value of result after executing this Verilog code?</p><p>Note: This is only an example. ALWAYS use parenthesis and DO NOT EVER write code like this!</p><pre class=\"prettyprint linenums\">reg [7:0] a = 0;\nreg [7:0] b = 0;\nreg [7:0] result = 0; \n\t\ninitial begin\n    a = 8'hXA;\n    b = 8'hBX;\n    result = ~a &lt;&lt; 4 | b &gt;&gt; 2**3-4;\nend</pre>", "relatedLectureIds": ["28207828"], "feedbacks": ["~a &lt;&lt; 4 is 8'h50 so the result cannot start with 4'hA.", "CORRECT: The bit-wise operator | has the lowest precedence so the expression can be split in two members.  The lest member has the value 8'h50 and the right one has the value 8'h0B.", "b &gt;&gt; 2**3-4 means b &gt;&gt; (8-4) = b &gt;&gt; 4 = 8'hBX &gt;&gt; 4 = 8'h0B. Thus the last 4 bits of result cannot be 4'hA."], "answers": ["<p> result = 8'hAB</p>", "<p>result = 8'h5B</p>", "<p>result = 8'hAA</p>"]}, "correct_response": ["b"], "section": "", "question_plain": "What is the value of result after executing this Verilog code?Note: This is only an example. ALWAYS use parenthesis and DO NOT EVER write code like this!reg [7:0] a = 0;\nreg [7:0] b = 0;\nreg [7:0] result = 0; \n\t\ninitial begin\n    a = 8'hXA;\n    b = 8'hBX;\n    result = ~a &lt;&lt; 4 | b &gt;&gt; 2**3-4;\nend", "related_lectures": [{"_class": "lecture", "id": 28207828, "title": "Verilog Operators - Precedence", "created": "2021-08-27T10:01:56Z", "is_published": true, "asset": {"_class": "asset", "id": 36370234, "asset_type": "Video", "title": "03.30_Verilog_Operators_Precedence.mp4", "created": "2021-09-22T06:46:40Z"}, "object_index": 51, "url": "/course/verilog-hdl-fundamentals-for-digital-design-and-verification/learn/lecture/28207828"}]}]};
+    var correct = 0;
+    var total = 0;
+    const questionData = quizData.questions
+    const passPercent = quizData.pass_percent
+    function kiemTraDapAn(correctMuti, choise) {
+      // Chuyển đổi các số trong choise thành chữ cái tương ứng
+      const choiseLetters = choise.map(num => String.fromCharCode(parseInt(num) + 'a'.charCodeAt(0)));
+      console.log('choiseLetters',choiseLetters)
+      // Kiểm tra điều kiện:
+      // 1. Chiều dài hai mảng phải bằng nhau
+      // 2. Tất cả các phần tử trong choiseLetters phải có trong correctMuti
+      if (
+        choiseLetters.length === correctMuti.length &&
+        choiseLetters.every(c => correctMuti.includes(c))
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    function main() {
+      total = questionData.length;
+
+      var questions = [];
+      for (var i = 0; i < questionData.length; i++) {
+        var question = questionData[i];
+        var questionText = question.prompt.question;
+        var answers = question.prompt.answers;
+        var correctAnswer = question.correct_response[0];
+        var correctMuti = question.correct_response;
+        var correctAnswerText = answers[correctAnswer.charCodeAt(0) - 97];
+        var questionObj = {
+          question: questionText,
+          correctAnswer: correctAnswerText,
+          answers: answers,
+          id: question.id,
+          explanation: question.prompt.explanation,
+          correctMuti
+
+        };
+        questions.push(questionObj);
+      }
+      console.log(questions.filter(i => i.correctMuti.length > 1))
+
+      updateScore();
+
+      // display the questions
+      var questionsContainer = document.getElementById("quiz-container");
+      for (var i = 0; i < questions.length; i++) {
+        var question = questions[i];
+        var questionElement = document.createElement("form");
+        questionElement.className = "question";
+        questionElement.innerHTML =
+          "<span>Question " +
+          (i + 1) +
+          ":</span>" +
+          '<div class="question-prompt">' +
+          question.question +
+          "</div>";
+        questionElement.id = question.id;
+        questionElement.classList.add("quiz-container");
+        var answersElement = document.createElement("ul");
+        answersElement.className = "answers";
+        console.log('question.correctMuti', question.correctMuti.length)
+        if (question.correctMuti.length > 1) {
+          for (var j = 0; j < question.answers.length; j++) {
+            var answer = question.answers[j];
+            var answerElement = document.createElement("li");
+            answerElement.className = "answer";
+            answerElement.innerHTML =
+              '<label for="input-' +
+              question.id +
+              "-" +
+              j +
+              '"><div onclick="select2(' +
+              question.id +
+              ", " +
+              j +
+              ')"><input id="input-' +
+              question.id +
+              "-" +
+              j +
+              '" type="checkbox" name="question' +
+              i +
+              '" value="' +
+              j +
+              '">' +
+              answer +
+              "</input></div></label>";
+            answerElement.classList.add("question-answer");
+            answersElement.appendChild(answerElement);
+          }
+        } else {
+          for (var j = 0; j < question.answers.length; j++) {
+            var answer = question.answers[j];
+            var answerElement = document.createElement("li");
+            answerElement.className = "answer";
+            answerElement.innerHTML =
+              '<label for="input-' +
+              question.id +
+              "-" +
+              j +
+              '"><div onclick="select(' +
+              question.id +
+              ", " +
+              j +
+              ')"><span></span><input id="input-' +
+              question.id +
+              "-" +
+              j +
+              '" type="radio" name="question' +
+              i +
+              '" value="' +
+              j +
+              '">' +
+              answer +
+              "</input></div></label>";
+            answerElement.classList.add("question-answer");
+            answersElement.appendChild(answerElement);
+          }
+        }
+        questionElement.appendChild(answersElement);
+
+        // add a submit button
+        var submitButton = document.createElement("button");
+        submitButton.className = "submit";
+        submitButton.innerHTML = "Submit";
+        submitButton.classList.add("submit-button");
+
+        submitButton.addEventListener("click", function (e) {
+          e.preventDefault();
+          var questionElement = e.target.parentElement;
+          var questionId = questionElement.id;
+          var question = questions.filter(function (q) {
+            return q.id == questionId;
+          })[0];
+
+          // set the border color of all answers to black
+          var answers = questionElement.getElementsByClassName("answer");
+          for (var i = 0; i < answers.length; i++) {
+            console.log(answers[i]);
+            answers[i].children[0].style.borderColor = "#1c1d1f";
+          }
+
+          var answer = questionElement.querySelector(
+            'input[type="radio"]:checked'
+          );
+          var mutilanswer = questionElement.querySelectorAll(
+            'input[type="checkbox"]:checked'
+          );
+          if (answer) {
+            var answerIndex = answer.value;
+            var answerText = question.answers[answerIndex];
+            if (answerText == question.correctAnswer) {
+              answer.parentElement.parentElement.style.borderColor =
+                "limegreen";
+              // alert("Correct!");
+              correct++;
+              updateScore();
+              questionElement.innerHTML += question.explanation
+
+            } else {
+              answer.parentElement.parentElement.style.borderColor = "red";
+              // alert("Incorrect!");
+            }
+          }
+          if (mutilanswer) {
+            var answerIndex = [...mutilanswer].map(a => a.value);
+
+            if (kiemTraDapAn(question.correctMuti, answerIndex)) {
+              [...mutilanswer].map(item => {
+                item.parentElement.parentElement.style.borderColor =
+                "limegreen";
+              })
+              // alert("Correct!");
+              correct++;
+              updateScore();
+              questionElement.innerHTML += question.explanation
+            } else {
+              [...mutilanswer].map(item => {
+                item.parentElement.parentElement.style.borderColor =
+                "red";
+              })
+            }
+            // var answerText = question.answers[answerIndex];
+            // if (answerText == question.correctAnswer) {
+            //   answer.parentElement.parentElement.style.borderColor =
+            //     "limegreen";
+            //   // alert("Correct!");
+            //   correct++;
+            //   updateScore();
+            //   questionElement.innerHTML += question.explanation
+
+            // } else {
+            //   answer.parentElement.parentElement.style.borderColor = "red";
+            //   // alert("Incorrect!");
+            // }
+          }
+          // else {
+          //   alert("Please select an answer.");
+          // }
+
+        });
+
+        // add button
+        questionElement.appendChild(submitButton);
+
+        questionsContainer.appendChild(questionElement);
+      }
+    }
+
+    function select(question, answer) {
+      var questionElement = document.getElementById(question);
+      var answers = questionElement.getElementsByClassName("answer");
+      for (var i = 0; i < answers.length; i++) {
+        var span = answers[i].children[0].children[0].children[0];
+        var input = answers[i].children[0].children[0].children[1];
+        span.classList.remove("selected");
+        input.checked = false;
+      }
+      var span = answers[answer].children[0].children[0].children[0];
+      var input = answers[answer].children[0].children[0].children[1];
+      span.classList.add("selected");
+      input.checked = true;
+    }
+    function select2(question, answer) {
+      var questionElement = document.getElementById(question);
+      var answers = questionElement.getElementsByClassName("answer");
+      // for (var i = 0; i < answers.length; i++) {
+      //   var span = answers[i].children[0].children[0].children[0];
+      //   var input = answers[i].children[0].children[0].children[1];
+      //   if(input.checked){
+      //     span.classList.remove("selected");
+      //     input.checked = false;
+      //   }
+
+      // }
+      // var span = answers[answer].children[0].children[0].children[0];
+      // var input = answers[answer].children[0].children[0].children[1];
+      // span.classList.add("selected");
+      // input.checked = true;
+    }
+    function updateScore() {
+      var scoreElem = document.getElementById("score");
+      const score = (correct / total) * 100;
+      scoreElem.innerHTML = "Score: " + score + "/" + passPercent + "%";
+    }
+  </script>
+</body>
+
+</html>

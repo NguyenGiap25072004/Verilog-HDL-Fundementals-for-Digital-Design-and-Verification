@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz</title>
+
+  <style>
+    body {
+      font-family: sf pro text, -apple-system, BlinkMacSystemFont, Roboto,
+        segoe ui, Helvetica, Arial, sans-serif, apple color emoji,
+        segoe ui emoji, segoe ui symbol;
+      font-weight: 400;
+      line-height: 22.4px;
+      font-size: 16px;
+    }
+
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    ul,
+    ol {
+      font-size: 16px;
+      font-weight: 400;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      max-width: none;
+    }
+
+    code {
+      background-color: #fff;
+      border: 1px solid #d1d7dc;
+      color: #b4690e;
+      font-size: 90%;
+      padding: 0.2rem 0.4rem;
+    }
+
+    .quiz-content {
+      padding: 2.4rem;
+      word-break: break-word;
+      max-width: 86rem;
+      margin: 0 auto;
+    }
+
+    .quiz-container {
+      margin: 0 auto;
+      max-width: 84rem;
+      padding: 0;
+    }
+
+    .question {
+      margin-bottom: 5rem;
+    }
+
+    .question span {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .question-prompt {
+      margin-top: 0.8rem;
+      font-weight: 700;
+    }
+
+    .question-answer {
+      margin-top: 1.6rem;
+      padding-left: 0;
+      box-sizing: border-box;
+    }
+
+    .question-answer label {
+      max-width: 80rem;
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      min-width: 18rem;
+      border: solid #1c1d1f 2px;
+    }
+
+    .question-answer div {
+      padding: 0.5rem;
+      width: 100%;
+    }
+
+    .question-answer div:hover {
+      background-color: #f5f5f5;
+    }
+
+    /* .question-answer input {
+      display: none;
+    } */
+
+    .question-answer span {
+      width: 1rem;
+      height: 1rem;
+      margin-right: 1.6rem;
+      top: 0;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+      border: 0.2rem solid #1c1d1f;
+      position: relative;
+    }
+
+    .selected {
+      background: #1c1d1f;
+      box-shadow: 0 0 0 0.4rem #fff inset;
+    }
+
+    .score {
+      position: fixed;
+      background-color: #b4690e;
+      padding: 10px;
+      color: white;
+    }
+  </style>
+</head>
+
+<body onload="main()">
+  <div id="score" class="score">
+    <span>Score: N/A of N/A</span>
+  </div>
+  <div id="quiz-container" class="quiz-content"></div>
+
+  <script>
+    const quizData = {"pass_percent": 70, "questions": [{"_class": "assessment", "id": 58556102, "assessment_type": "multiple-choice", "prompt": {"question": "<p>Which of the following is NOT a Verilog Design Style?</p>", "relatedLectureIds": ["28208410"], "feedbacks": ["This is a Verilog design Style", "This is a Verilog design Style", "CORRECT: This is a type of digital circuit that can be described using all 3 Verilog design styles: Structural / Behavioral / Dataflow.", "This is a Verilog design Style"], "answers": ["<p>Structural</p>", "<p>Behavioral</p>", "<p>Combinational</p>", "<p>Dataflow</p>"]}, "correct_response": ["c"], "section": "", "question_plain": "Which of the following is NOT a Verilog Design Style?", "related_lectures": [{"_class": "lecture", "id": 28208410, "title": "What are HDL Design Styles?", "created": "2021-08-27T10:55:54Z", "is_published": true, "asset": {"_class": "asset", "id": 36370292, "asset_type": "Video", "title": "05.01_What_are_HDL_design_styles.mp4", "created": "2021-09-22T06:49:51Z"}, "object_index": 61, "url": "/course/verilog-hdl-fundamentals-for-digital-design-and-verification/learn/lecture/28208410"}]}, {"_class": "assessment", "id": 58556124, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What is the Verilog Dataflow Design Style used for?</p>", "relatedLectureIds": ["28208522"], "feedbacks": ["CORRECT: You can only design combinational circuits with this style", "Sequential circuits (will get to know later in the course) are designed using the Behavioral Style"], "answers": ["<p>Combinational design</p>", "<p>Sequential design</p>"]}, "correct_response": ["a"], "section": "", "question_plain": "What is the Verilog Dataflow Design Style used for?", "related_lectures": [{"_class": "lecture", "id": 28208522, "title": "Verilog Dataflow style", "created": "2021-08-27T11:14:39Z", "is_published": true, "asset": {"_class": "asset", "id": 36370316, "asset_type": "Video", "title": "05.04_Verilog_Dataflow_style.mp4", "created": "2021-09-22T06:50:59Z"}, "object_index": 64, "url": "/course/verilog-hdl-fundamentals-for-digital-design-and-verification/learn/lecture/28208522"}]}, {"_class": "assessment", "id": 58556150, "assessment_type": "multiple-choice", "prompt": {"question": "<p> What Verilog Design Style do we have if the Verilog code contains only always@() procedures?</p>", "relatedLectureIds": ["28208728"], "feedbacks": ["The Structural style uses module / Verilog primitive instances to describe a design.", "CORRECT: This is the definition of the Behavioral Style", "Dataflow Style contains logic expressions and uses the assign keyword."], "answers": ["<p>Structural</p>", "<p>Behavioral</p>", "<p>Dataflow</p>"]}, "correct_response": ["b"], "section": "", "question_plain": "What Verilog Design Style do we have if the Verilog code contains only always@() procedures?", "related_lectures": [{"_class": "lecture", "id": 28208728, "title": "Verilog_Behavioral_style", "created": "2021-08-27T11:30:37Z", "is_published": true, "asset": {"_class": "asset", "id": 36370338, "asset_type": "Video", "title": "05.06_Verilog_Behavioral_style.mp4", "created": "2021-09-22T06:52:05Z"}, "object_index": 66, "url": "/course/verilog-hdl-fundamentals-for-digital-design-and-verification/learn/lecture/28208728"}]}, {"_class": "assessment", "id": 58556180, "assessment_type": "multiple-choice", "prompt": {"question": "<p>You have 10 always@ / initial procedures in a Verilog file. How are these executed during simulation?</p>", "relatedLectureIds": ["28208728"], "feedbacks": ["This is NOT how Verilog procedures are executed during simulation", "CORRECT: All Verilog procedures are executed in parallel based on their sensitivity lists"], "answers": ["<p>Series</p>", "<p>Parallel</p>"]}, "correct_response": ["b"], "section": "", "question_plain": "You have 10 always@ / initial procedures in a Verilog file. How are these executed during simulation?", "related_lectures": [{"_class": "lecture", "id": 28208728, "title": "Verilog_Behavioral_style", "created": "2021-08-27T11:30:37Z", "is_published": true, "asset": {"_class": "asset", "id": 36370338, "asset_type": "Video", "title": "05.06_Verilog_Behavioral_style.mp4", "created": "2021-09-22T06:52:05Z"}, "object_index": 66, "url": "/course/verilog-hdl-fundamentals-for-digital-design-and-verification/learn/lecture/28208728"}]}, {"_class": "assessment", "id": 58558014, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What data type you are allowed to have in the Left Hand Side (LHS) of a synthesizable always@ procedure?</p><pre class=\"prettyprint linenums\">always @(*) begin // reference example\t     \n    result = a + b + 1'b1;\nend</pre>", "relatedLectureIds": ["28208742"], "feedbacks": ["CORRECT: You should always use this data type in the LHS of synthesizable Verilog code", "This data type can be used only in continuous assignments. You will get compile errors if you use in in always@", "This data type is not synthesizable", "This data type is not synthesizable"], "answers": ["<p>reg</p>", "<p>wire</p>", "<p>time</p>", "<p>real</p>"]}, "correct_response": ["a"], "section": "", "question_plain": "What data type you are allowed to have in the Left Hand Side (LHS) of a synthesizable always@ procedure?always @(*) begin // reference example\t     \n    result = a + b + 1'b1;\nend", "related_lectures": [{"_class": "lecture", "id": 28208742, "title": "Remember!", "created": "2021-08-27T11:31:33Z", "is_published": true, "asset": {"_class": "asset", "id": 36396216, "asset_type": "Video", "title": "05.07.Remember!.mp4", "created": "2021-09-23T10:32:26Z"}, "object_index": 67, "url": "/course/verilog-hdl-fundamentals-for-digital-design-and-verification/learn/lecture/28208742"}]}]};
+    var correct = 0;
+    var total = 0;
+    const questionData = quizData.questions
+    const passPercent = quizData.pass_percent
+    function kiemTraDapAn(correctMuti, choise) {
+      // Chuyển đổi các số trong choise thành chữ cái tương ứng
+      const choiseLetters = choise.map(num => String.fromCharCode(parseInt(num) + 'a'.charCodeAt(0)));
+      console.log('choiseLetters',choiseLetters)
+      // Kiểm tra điều kiện:
+      // 1. Chiều dài hai mảng phải bằng nhau
+      // 2. Tất cả các phần tử trong choiseLetters phải có trong correctMuti
+      if (
+        choiseLetters.length === correctMuti.length &&
+        choiseLetters.every(c => correctMuti.includes(c))
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    function main() {
+      total = questionData.length;
+
+      var questions = [];
+      for (var i = 0; i < questionData.length; i++) {
+        var question = questionData[i];
+        var questionText = question.prompt.question;
+        var answers = question.prompt.answers;
+        var correctAnswer = question.correct_response[0];
+        var correctMuti = question.correct_response;
+        var correctAnswerText = answers[correctAnswer.charCodeAt(0) - 97];
+        var questionObj = {
+          question: questionText,
+          correctAnswer: correctAnswerText,
+          answers: answers,
+          id: question.id,
+          explanation: question.prompt.explanation,
+          correctMuti
+
+        };
+        questions.push(questionObj);
+      }
+      console.log(questions.filter(i => i.correctMuti.length > 1))
+
+      updateScore();
+
+      // display the questions
+      var questionsContainer = document.getElementById("quiz-container");
+      for (var i = 0; i < questions.length; i++) {
+        var question = questions[i];
+        var questionElement = document.createElement("form");
+        questionElement.className = "question";
+        questionElement.innerHTML =
+          "<span>Question " +
+          (i + 1) +
+          ":</span>" +
+          '<div class="question-prompt">' +
+          question.question +
+          "</div>";
+        questionElement.id = question.id;
+        questionElement.classList.add("quiz-container");
+        var answersElement = document.createElement("ul");
+        answersElement.className = "answers";
+        console.log('question.correctMuti', question.correctMuti.length)
+        if (question.correctMuti.length > 1) {
+          for (var j = 0; j < question.answers.length; j++) {
+            var answer = question.answers[j];
+            var answerElement = document.createElement("li");
+            answerElement.className = "answer";
+            answerElement.innerHTML =
+              '<label for="input-' +
+              question.id +
+              "-" +
+              j +
+              '"><div onclick="select2(' +
+              question.id +
+              ", " +
+              j +
+              ')"><input id="input-' +
+              question.id +
+              "-" +
+              j +
+              '" type="checkbox" name="question' +
+              i +
+              '" value="' +
+              j +
+              '">' +
+              answer +
+              "</input></div></label>";
+            answerElement.classList.add("question-answer");
+            answersElement.appendChild(answerElement);
+          }
+        } else {
+          for (var j = 0; j < question.answers.length; j++) {
+            var answer = question.answers[j];
+            var answerElement = document.createElement("li");
+            answerElement.className = "answer";
+            answerElement.innerHTML =
+              '<label for="input-' +
+              question.id +
+              "-" +
+              j +
+              '"><div onclick="select(' +
+              question.id +
+              ", " +
+              j +
+              ')"><span></span><input id="input-' +
+              question.id +
+              "-" +
+              j +
+              '" type="radio" name="question' +
+              i +
+              '" value="' +
+              j +
+              '">' +
+              answer +
+              "</input></div></label>";
+            answerElement.classList.add("question-answer");
+            answersElement.appendChild(answerElement);
+          }
+        }
+        questionElement.appendChild(answersElement);
+
+        // add a submit button
+        var submitButton = document.createElement("button");
+        submitButton.className = "submit";
+        submitButton.innerHTML = "Submit";
+        submitButton.classList.add("submit-button");
+
+        submitButton.addEventListener("click", function (e) {
+          e.preventDefault();
+          var questionElement = e.target.parentElement;
+          var questionId = questionElement.id;
+          var question = questions.filter(function (q) {
+            return q.id == questionId;
+          })[0];
+
+          // set the border color of all answers to black
+          var answers = questionElement.getElementsByClassName("answer");
+          for (var i = 0; i < answers.length; i++) {
+            console.log(answers[i]);
+            answers[i].children[0].style.borderColor = "#1c1d1f";
+          }
+
+          var answer = questionElement.querySelector(
+            'input[type="radio"]:checked'
+          );
+          var mutilanswer = questionElement.querySelectorAll(
+            'input[type="checkbox"]:checked'
+          );
+          if (answer) {
+            var answerIndex = answer.value;
+            var answerText = question.answers[answerIndex];
+            if (answerText == question.correctAnswer) {
+              answer.parentElement.parentElement.style.borderColor =
+                "limegreen";
+              // alert("Correct!");
+              correct++;
+              updateScore();
+              questionElement.innerHTML += question.explanation
+
+            } else {
+              answer.parentElement.parentElement.style.borderColor = "red";
+              // alert("Incorrect!");
+            }
+          }
+          if (mutilanswer) {
+            var answerIndex = [...mutilanswer].map(a => a.value);
+
+            if (kiemTraDapAn(question.correctMuti, answerIndex)) {
+              [...mutilanswer].map(item => {
+                item.parentElement.parentElement.style.borderColor =
+                "limegreen";
+              })
+              // alert("Correct!");
+              correct++;
+              updateScore();
+              questionElement.innerHTML += question.explanation
+            } else {
+              [...mutilanswer].map(item => {
+                item.parentElement.parentElement.style.borderColor =
+                "red";
+              })
+            }
+            // var answerText = question.answers[answerIndex];
+            // if (answerText == question.correctAnswer) {
+            //   answer.parentElement.parentElement.style.borderColor =
+            //     "limegreen";
+            //   // alert("Correct!");
+            //   correct++;
+            //   updateScore();
+            //   questionElement.innerHTML += question.explanation
+
+            // } else {
+            //   answer.parentElement.parentElement.style.borderColor = "red";
+            //   // alert("Incorrect!");
+            // }
+          }
+          // else {
+          //   alert("Please select an answer.");
+          // }
+
+        });
+
+        // add button
+        questionElement.appendChild(submitButton);
+
+        questionsContainer.appendChild(questionElement);
+      }
+    }
+
+    function select(question, answer) {
+      var questionElement = document.getElementById(question);
+      var answers = questionElement.getElementsByClassName("answer");
+      for (var i = 0; i < answers.length; i++) {
+        var span = answers[i].children[0].children[0].children[0];
+        var input = answers[i].children[0].children[0].children[1];
+        span.classList.remove("selected");
+        input.checked = false;
+      }
+      var span = answers[answer].children[0].children[0].children[0];
+      var input = answers[answer].children[0].children[0].children[1];
+      span.classList.add("selected");
+      input.checked = true;
+    }
+    function select2(question, answer) {
+      var questionElement = document.getElementById(question);
+      var answers = questionElement.getElementsByClassName("answer");
+      // for (var i = 0; i < answers.length; i++) {
+      //   var span = answers[i].children[0].children[0].children[0];
+      //   var input = answers[i].children[0].children[0].children[1];
+      //   if(input.checked){
+      //     span.classList.remove("selected");
+      //     input.checked = false;
+      //   }
+
+      // }
+      // var span = answers[answer].children[0].children[0].children[0];
+      // var input = answers[answer].children[0].children[0].children[1];
+      // span.classList.add("selected");
+      // input.checked = true;
+    }
+    function updateScore() {
+      var scoreElem = document.getElementById("score");
+      const score = (correct / total) * 100;
+      scoreElem.innerHTML = "Score: " + score + "/" + passPercent + "%";
+    }
+  </script>
+</body>
+
+</html>

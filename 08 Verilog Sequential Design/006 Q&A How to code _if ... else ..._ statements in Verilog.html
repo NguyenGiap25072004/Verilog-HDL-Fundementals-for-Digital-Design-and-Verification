@@ -1,0 +1,11 @@
+<p><strong>When&nbsp; write "begin" after each of the if/else statements?</strong></p><p>(thanks to Omer Fifer)</p><p><br></p><p>The syntax of <code>if else </code>is the following:</p><p><br></p><p><code>if (condition) execute_only_one_statement;</code></p><p>OR</p><pre class="prettyprint linenums">if (condition) begin // for multiple OR only one statement
+    execute_statementA1;
+    execute_statementA2;
+    ...;
+    execute_statementAN;
+end else begin
+    execute_statementB1;
+    execute_statementB2;
+    ...;
+    execute_statementBN;
+end </pre>

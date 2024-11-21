@@ -1,0 +1,1 @@
+<p><strong>Why is 0 the result of ~^5’b1_1111? I thought that it is supposed to be 1, as the result will always be 1?</strong></p><p>(thanks to Chuah Wan Juin)</p><p><br></p><p>This is how the Verilog reduction operation works:</p><p>~^5’b1_1111 = ~(1^1^1^1^1) = ~(0^0^1) = ~1 = 0.<br></p>

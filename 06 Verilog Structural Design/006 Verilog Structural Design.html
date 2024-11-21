@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz</title>
+
+  <style>
+    body {
+      font-family: sf pro text, -apple-system, BlinkMacSystemFont, Roboto,
+        segoe ui, Helvetica, Arial, sans-serif, apple color emoji,
+        segoe ui emoji, segoe ui symbol;
+      font-weight: 400;
+      line-height: 22.4px;
+      font-size: 16px;
+    }
+
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    ul,
+    ol {
+      font-size: 16px;
+      font-weight: 400;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      max-width: none;
+    }
+
+    code {
+      background-color: #fff;
+      border: 1px solid #d1d7dc;
+      color: #b4690e;
+      font-size: 90%;
+      padding: 0.2rem 0.4rem;
+    }
+
+    .quiz-content {
+      padding: 2.4rem;
+      word-break: break-word;
+      max-width: 86rem;
+      margin: 0 auto;
+    }
+
+    .quiz-container {
+      margin: 0 auto;
+      max-width: 84rem;
+      padding: 0;
+    }
+
+    .question {
+      margin-bottom: 5rem;
+    }
+
+    .question span {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .question-prompt {
+      margin-top: 0.8rem;
+      font-weight: 700;
+    }
+
+    .question-answer {
+      margin-top: 1.6rem;
+      padding-left: 0;
+      box-sizing: border-box;
+    }
+
+    .question-answer label {
+      max-width: 80rem;
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      min-width: 18rem;
+      border: solid #1c1d1f 2px;
+    }
+
+    .question-answer div {
+      padding: 0.5rem;
+      width: 100%;
+    }
+
+    .question-answer div:hover {
+      background-color: #f5f5f5;
+    }
+
+    /* .question-answer input {
+      display: none;
+    } */
+
+    .question-answer span {
+      width: 1rem;
+      height: 1rem;
+      margin-right: 1.6rem;
+      top: 0;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+      border: 0.2rem solid #1c1d1f;
+      position: relative;
+    }
+
+    .selected {
+      background: #1c1d1f;
+      box-shadow: 0 0 0 0.4rem #fff inset;
+    }
+
+    .score {
+      position: fixed;
+      background-color: #b4690e;
+      padding: 10px;
+      color: white;
+    }
+  </style>
+</head>
+
+<body onload="main()">
+  <div id="score" class="score">
+    <span>Score: N/A of N/A</span>
+  </div>
+  <div id="quiz-container" class="quiz-content"></div>
+
+  <script>
+    const quizData = {"pass_percent": 70, "questions": [{"_class": "assessment", "id": 58562154, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What does the following Verilog code contains?</p><p><code>and #0.3 and0 (o_and0, a, b);</code> </p>", "relatedLectureIds": ["28209340"], "feedbacks": ["True, but not the complete answer", "CORRECT: The inputs a in the and0 gate are a, b, and the output is o_and0", "and is not a keyword for switch-level primitives "], "answers": ["<p>And instance of an and module</p>", "<p>A Verilog built-in AND logic gate primitive</p>", "<p> A Verilog switch-level primitive</p>"]}, "correct_response": ["b"], "section": "", "question_plain": "What does the following Verilog code contains?and #0.3 and0 (o_and0, a, b);", "related_lectures": [{"_class": "lecture", "id": 28209340, "title": "Verilog Built-in_Primitives", "created": "2021-08-27T12:15:34Z", "is_published": true, "asset": {"_class": "asset", "id": 36395508, "asset_type": "Video", "title": "06.02_Built-in_Primitives.mp4", "created": "2021-09-23T09:52:03Z"}, "object_index": 84, "url": "/course/verilog-hdl-fundamentals-for-digital-design-and-verification/learn/lecture/28209340"}]}, {"_class": "assessment", "id": 58562500, "assessment_type": "multiple-choice", "prompt": {"question": "<p>A multiplexer has 39 x 1bit inputs. How many select bits do we need to be able to properly drive each input to the output?</p>", "relatedLectureIds": ["28209384"], "feedbacks": ["2 select bits can be used only for 2**2 = 4 inputs", "CORRECT: 6 select bits can be used for 2**6 = 64 inputs. 64-39=25 combinations won't be used", "5 select bits can be used only for 2**5 = 32 inputs", "8 select bits can be used for 2**8 = 256 inputs. Far too many unused combinations"], "answers": ["<p>2</p>", "<p>6</p>", "<p>5</p>", "<p>8</p>"]}, "correct_response": ["b"], "section": "", "question_plain": "A multiplexer has 39 x 1bit inputs. How many select bits do we need to be able to properly drive each input to the output?", "related_lectures": [{"_class": "lecture", "id": 28209384, "title": "Discover the Multiplexer", "created": "2021-08-27T12:20:35Z", "is_published": true, "asset": {"_class": "asset", "id": 36370622, "asset_type": "Video", "title": "06.04_Discover_the_Multiplexer.mp4", "created": "2021-09-22T07:01:46Z"}, "object_index": 86, "url": "/course/verilog-hdl-fundamentals-for-digital-design-and-verification/learn/lecture/28209384"}]}, {"_class": "assessment", "id": 58562738, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What is the output value of a <strong>bufif0</strong> tri-state buffer when sel = 1?</p>", "relatedLectureIds": ["28209548"], "feedbacks": ["sel = 1 means the bufif0 is disabled", "sel = 1 means the bufif0 is disabled", "CORRECT: sel = 1 means the bufif0 is disabled so the output is Z", "Only 0, 1, and Z are valid for this type of primitive "], "answers": ["<p>0</p>", "<p>1</p>", "<p>Z (high-impedance)</p>", "<p>X (unknown)</p>"]}, "correct_response": ["c"], "section": "", "question_plain": "What is the output value of a bufif0 tri-state buffer when sel = 1?", "related_lectures": [{"_class": "lecture", "id": 28209548, "title": "The Tri-state buffer", "created": "2021-08-27T12:32:28Z", "is_published": true, "asset": {"_class": "asset", "id": 36370658, "asset_type": "Video", "title": "06.08_The_Tri-state_buffer.mp4", "created": "2021-09-22T07:03:19Z"}, "object_index": 90, "url": "/course/verilog-hdl-fundamentals-for-digital-design-and-verification/learn/lecture/28209548"}]}, {"_class": "assessment", "id": 58562758, "assessment_type": "multiple-choice", "prompt": {"question": "<p>Where is the Verilog Structural Design Style least used?</p>", "relatedLectureIds": ["28209730"], "feedbacks": ["This is an actual usage of the Verilog Structural Design Style", "This is an actual usage of the Verilog Structural Design Style", "CORRECT: For complex design it is recommended to use the Behavioral Style"], "answers": ["<p>Top-level integration</p>", "<p>Netlist files</p>", "<p>Complex behavior design</p>"]}, "correct_response": ["c"], "section": "", "question_plain": "Where is the Verilog Structural Design Style least used?", "related_lectures": [{"_class": "lecture", "id": 28209730, "title": "Remember!", "created": "2021-08-27T12:49:26Z", "is_published": true, "asset": {"_class": "asset", "id": 36370732, "asset_type": "Video", "title": "06.14_Remember!.mp4", "created": "2021-09-22T07:06:12Z"}, "object_index": 96, "url": "/course/verilog-hdl-fundamentals-for-digital-design-and-verification/learn/lecture/28209730"}]}]};
+    var correct = 0;
+    var total = 0;
+    const questionData = quizData.questions
+    const passPercent = quizData.pass_percent
+    function kiemTraDapAn(correctMuti, choise) {
+      // Chuyển đổi các số trong choise thành chữ cái tương ứng
+      const choiseLetters = choise.map(num => String.fromCharCode(parseInt(num) + 'a'.charCodeAt(0)));
+      console.log('choiseLetters',choiseLetters)
+      // Kiểm tra điều kiện:
+      // 1. Chiều dài hai mảng phải bằng nhau
+      // 2. Tất cả các phần tử trong choiseLetters phải có trong correctMuti
+      if (
+        choiseLetters.length === correctMuti.length &&
+        choiseLetters.every(c => correctMuti.includes(c))
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    function main() {
+      total = questionData.length;
+
+      var questions = [];
+      for (var i = 0; i < questionData.length; i++) {
+        var question = questionData[i];
+        var questionText = question.prompt.question;
+        var answers = question.prompt.answers;
+        var correctAnswer = question.correct_response[0];
+        var correctMuti = question.correct_response;
+        var correctAnswerText = answers[correctAnswer.charCodeAt(0) - 97];
+        var questionObj = {
+          question: questionText,
+          correctAnswer: correctAnswerText,
+          answers: answers,
+          id: question.id,
+          explanation: question.prompt.explanation,
+          correctMuti
+
+        };
+        questions.push(questionObj);
+      }
+      console.log(questions.filter(i => i.correctMuti.length > 1))
+
+      updateScore();
+
+      // display the questions
+      var questionsContainer = document.getElementById("quiz-container");
+      for (var i = 0; i < questions.length; i++) {
+        var question = questions[i];
+        var questionElement = document.createElement("form");
+        questionElement.className = "question";
+        questionElement.innerHTML =
+          "<span>Question " +
+          (i + 1) +
+          ":</span>" +
+          '<div class="question-prompt">' +
+          question.question +
+          "</div>";
+        questionElement.id = question.id;
+        questionElement.classList.add("quiz-container");
+        var answersElement = document.createElement("ul");
+        answersElement.className = "answers";
+        console.log('question.correctMuti', question.correctMuti.length)
+        if (question.correctMuti.length > 1) {
+          for (var j = 0; j < question.answers.length; j++) {
+            var answer = question.answers[j];
+            var answerElement = document.createElement("li");
+            answerElement.className = "answer";
+            answerElement.innerHTML =
+              '<label for="input-' +
+              question.id +
+              "-" +
+              j +
+              '"><div onclick="select2(' +
+              question.id +
+              ", " +
+              j +
+              ')"><input id="input-' +
+              question.id +
+              "-" +
+              j +
+              '" type="checkbox" name="question' +
+              i +
+              '" value="' +
+              j +
+              '">' +
+              answer +
+              "</input></div></label>";
+            answerElement.classList.add("question-answer");
+            answersElement.appendChild(answerElement);
+          }
+        } else {
+          for (var j = 0; j < question.answers.length; j++) {
+            var answer = question.answers[j];
+            var answerElement = document.createElement("li");
+            answerElement.className = "answer";
+            answerElement.innerHTML =
+              '<label for="input-' +
+              question.id +
+              "-" +
+              j +
+              '"><div onclick="select(' +
+              question.id +
+              ", " +
+              j +
+              ')"><span></span><input id="input-' +
+              question.id +
+              "-" +
+              j +
+              '" type="radio" name="question' +
+              i +
+              '" value="' +
+              j +
+              '">' +
+              answer +
+              "</input></div></label>";
+            answerElement.classList.add("question-answer");
+            answersElement.appendChild(answerElement);
+          }
+        }
+        questionElement.appendChild(answersElement);
+
+        // add a submit button
+        var submitButton = document.createElement("button");
+        submitButton.className = "submit";
+        submitButton.innerHTML = "Submit";
+        submitButton.classList.add("submit-button");
+
+        submitButton.addEventListener("click", function (e) {
+          e.preventDefault();
+          var questionElement = e.target.parentElement;
+          var questionId = questionElement.id;
+          var question = questions.filter(function (q) {
+            return q.id == questionId;
+          })[0];
+
+          // set the border color of all answers to black
+          var answers = questionElement.getElementsByClassName("answer");
+          for (var i = 0; i < answers.length; i++) {
+            console.log(answers[i]);
+            answers[i].children[0].style.borderColor = "#1c1d1f";
+          }
+
+          var answer = questionElement.querySelector(
+            'input[type="radio"]:checked'
+          );
+          var mutilanswer = questionElement.querySelectorAll(
+            'input[type="checkbox"]:checked'
+          );
+          if (answer) {
+            var answerIndex = answer.value;
+            var answerText = question.answers[answerIndex];
+            if (answerText == question.correctAnswer) {
+              answer.parentElement.parentElement.style.borderColor =
+                "limegreen";
+              // alert("Correct!");
+              correct++;
+              updateScore();
+              questionElement.innerHTML += question.explanation
+
+            } else {
+              answer.parentElement.parentElement.style.borderColor = "red";
+              // alert("Incorrect!");
+            }
+          }
+          if (mutilanswer) {
+            var answerIndex = [...mutilanswer].map(a => a.value);
+
+            if (kiemTraDapAn(question.correctMuti, answerIndex)) {
+              [...mutilanswer].map(item => {
+                item.parentElement.parentElement.style.borderColor =
+                "limegreen";
+              })
+              // alert("Correct!");
+              correct++;
+              updateScore();
+              questionElement.innerHTML += question.explanation
+            } else {
+              [...mutilanswer].map(item => {
+                item.parentElement.parentElement.style.borderColor =
+                "red";
+              })
+            }
+            // var answerText = question.answers[answerIndex];
+            // if (answerText == question.correctAnswer) {
+            //   answer.parentElement.parentElement.style.borderColor =
+            //     "limegreen";
+            //   // alert("Correct!");
+            //   correct++;
+            //   updateScore();
+            //   questionElement.innerHTML += question.explanation
+
+            // } else {
+            //   answer.parentElement.parentElement.style.borderColor = "red";
+            //   // alert("Incorrect!");
+            // }
+          }
+          // else {
+          //   alert("Please select an answer.");
+          // }
+
+        });
+
+        // add button
+        questionElement.appendChild(submitButton);
+
+        questionsContainer.appendChild(questionElement);
+      }
+    }
+
+    function select(question, answer) {
+      var questionElement = document.getElementById(question);
+      var answers = questionElement.getElementsByClassName("answer");
+      for (var i = 0; i < answers.length; i++) {
+        var span = answers[i].children[0].children[0].children[0];
+        var input = answers[i].children[0].children[0].children[1];
+        span.classList.remove("selected");
+        input.checked = false;
+      }
+      var span = answers[answer].children[0].children[0].children[0];
+      var input = answers[answer].children[0].children[0].children[1];
+      span.classList.add("selected");
+      input.checked = true;
+    }
+    function select2(question, answer) {
+      var questionElement = document.getElementById(question);
+      var answers = questionElement.getElementsByClassName("answer");
+      // for (var i = 0; i < answers.length; i++) {
+      //   var span = answers[i].children[0].children[0].children[0];
+      //   var input = answers[i].children[0].children[0].children[1];
+      //   if(input.checked){
+      //     span.classList.remove("selected");
+      //     input.checked = false;
+      //   }
+
+      // }
+      // var span = answers[answer].children[0].children[0].children[0];
+      // var input = answers[answer].children[0].children[0].children[1];
+      // span.classList.add("selected");
+      // input.checked = true;
+    }
+    function updateScore() {
+      var scoreElem = document.getElementById("score");
+      const score = (correct / total) * 100;
+      scoreElem.innerHTML = "Score: " + score + "/" + passPercent + "%";
+    }
+  </script>
+</body>
+
+</html>
