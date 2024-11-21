@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz</title>
+
+  <style>
+    body {
+      font-family: sf pro text, -apple-system, BlinkMacSystemFont, Roboto,
+        segoe ui, Helvetica, Arial, sans-serif, apple color emoji,
+        segoe ui emoji, segoe ui symbol;
+      font-weight: 400;
+      line-height: 22.4px;
+      font-size: 16px;
+    }
+
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    ul,
+    ol {
+      font-size: 16px;
+      font-weight: 400;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      max-width: none;
+    }
+
+    code {
+      background-color: #fff;
+      border: 1px solid #d1d7dc;
+      color: #b4690e;
+      font-size: 90%;
+      padding: 0.2rem 0.4rem;
+    }
+
+    .quiz-content {
+      padding: 2.4rem;
+      word-break: break-word;
+      max-width: 86rem;
+      margin: 0 auto;
+    }
+
+    .quiz-container {
+      margin: 0 auto;
+      max-width: 84rem;
+      padding: 0;
+    }
+
+    .question {
+      margin-bottom: 5rem;
+    }
+
+    .question span {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .question-prompt {
+      margin-top: 0.8rem;
+      font-weight: 700;
+    }
+
+    .question-answer {
+      margin-top: 1.6rem;
+      padding-left: 0;
+      box-sizing: border-box;
+    }
+
+    .question-answer label {
+      max-width: 80rem;
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      min-width: 18rem;
+      border: solid #1c1d1f 2px;
+    }
+
+    .question-answer div {
+      padding: 0.5rem;
+      width: 100%;
+    }
+
+    .question-answer div:hover {
+      background-color: #f5f5f5;
+    }
+
+    /* .question-answer input {
+      display: none;
+    } */
+
+    .question-answer span {
+      width: 1rem;
+      height: 1rem;
+      margin-right: 1.6rem;
+      top: 0;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+      border: 0.2rem solid #1c1d1f;
+      position: relative;
+    }
+
+    .selected {
+      background: #1c1d1f;
+      box-shadow: 0 0 0 0.4rem #fff inset;
+    }
+
+    .score {
+      position: fixed;
+      background-color: #b4690e;
+      padding: 10px;
+      color: white;
+    }
+  </style>
+</head>
+
+<body onload="main()">
+  <div id="score" class="score">
+    <span>Score: N/A of N/A</span>
+  </div>
+  <div id="quiz-container" class="quiz-content"></div>
+
+  <script>
+    const quizData = {"pass_percent": 70, "questions": [{"_class": "assessment", "id": 59633356, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What is the main difference between <strong>Static Random Access Memory (SRAM)</strong> and<strong> Dynamic Random Access Memory (DRAM)</strong>?</p>", "relatedLectureIds": ["28294170"], "feedbacks": ["CORRECT! This is the main difference between them. However, SRAM also consumes more power compared to DRAM due to the higher transistor count required for its construction. DRAM, on the other hand, stores data in a capacitor-based structure, allowing for higher memory density and lower power consumption but with slightly slower access times.", "Both SRAM and DRAM can be used as primary memory, depending on the system requirements.", "It's the other way around. SRAM stores data in cells made up of flip-flops, while DRAM stores data in capacitors ."], "answers": ["<p>SRAM is faster but requires more silicon die area and power compared to DRAM.</p>", "<p>SRAM is used for primary memory, while DRAM is used for secondary memory.</p>", "<p>SRAM stores data in cells made up of capacitors , while DRAM stores data in flip-flops.</p>"]}, "correct_response": ["a"], "section": "", "question_plain": "What is the main difference between Static Random Access Memory (SRAM) and Dynamic Random Access Memory (DRAM)?", "related_lectures": [{"_class": "lecture", "id": 28294170, "title": "Basics of Semiconductor Memory", "created": "2021-09-01T14:46:21Z", "is_published": true, "asset": {"_class": "asset", "id": 36396058, "asset_type": "Video", "title": "10.01_Basics_of_Semiconductor_Memory.mp4", "created": "2021-09-23T10:21:25Z"}, "object_index": 172, "url": "/course/verilog-hdl-fundamentals-for-digital-design-and-verification/learn/lecture/28294170"}]}, {"_class": "assessment", "id": 59633614, "assessment_type": "multiple-choice", "prompt": {"question": "<p>You want to model a 16bit x 512 locations SRAM. What should be the SRAM array declaration? </p>", "relatedLectureIds": ["28294250"], "feedbacks": ["The wire type cannot be in the LHS of Verilog procedures. Reg type should be used.", "CORRECT! This is how you declare the variable used to model this SRAM.", "This variable is used to model a 10bit x 32768 SRAM."], "answers": ["<p>wire [15:0] ram [0:8];</p>", "<p>reg [15:0] ram [0:8];</p>", "<p>reg [8:0] ram [0:15] ;</p>"]}, "correct_response": ["b"], "section": "", "question_plain": "You want to model a 16bit x 512 locations SRAM. What should be the SRAM array declaration?", "related_lectures": [{"_class": "lecture", "id": 28294250, "title": "Action Time - Single Port Async Read SRAM", "created": "2021-09-01T14:49:13Z", "is_published": true, "asset": {"_class": "asset", "id": 36396066, "asset_type": "Video", "title": "10.02_Action_Time_Single_Port_Async_Read_SRAM.mp4", "created": "2021-09-23T10:21:48Z"}, "object_index": 173, "url": "/course/verilog-hdl-fundamentals-for-digital-design-and-verification/learn/lecture/28294250"}]}, {"_class": "assessment", "id": 59633816, "assessment_type": "multiple-choice", "prompt": {"question": "<p>Considering a 24-bit by 1024 locations SRAM array. What is the minimum number of address lines required to access all the locations?</p>", "relatedLectureIds": ["28294170"], "feedbacks": ["You need to use log2 of the total locations to get the total number of addresses.", "CORRECT! log2(1024) = 10. You need 10 address bits to access all the lines.", "You need to use log2 of the total locations to get the total number of addresses."], "answers": ["<p>7</p>", "<p>10</p>", "<p>11</p>"]}, "correct_response": ["b"], "section": "", "question_plain": "Considering a 24-bit by 1024 locations SRAM array. What is the minimum number of address lines required to access all the locations?", "related_lectures": [{"_class": "lecture", "id": 28294170, "title": "Basics of Semiconductor Memory", "created": "2021-09-01T14:46:21Z", "is_published": true, "asset": {"_class": "asset", "id": 36396058, "asset_type": "Video", "title": "10.01_Basics_of_Semiconductor_Memory.mp4", "created": "2021-09-23T10:21:25Z"}, "object_index": 172, "url": "/course/verilog-hdl-fundamentals-for-digital-design-and-verification/learn/lecture/28294170"}]}, {"_class": "assessment", "id": 59634102, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What type of SRAM is the following Verilog code modelling?\t</p><pre class=\"prettyprint linenums\">    always @(posedge clk) begin\n        if (write_en) begin\n\t    ram[address] &lt;= data_in;\n\tend\n    end\n    assign data_out = ram[address];</pre>", "relatedLectureIds": ["28294250"], "feedbacks": ["The read is not synchronous with clk.", "This SRAM has only 1 address port for both read and write.", "CORRECT!"], "answers": ["<p>Single-port sync read SRAM</p>", "<p>Dual-port sync read SRAM</p>", "<p>Single-port async read SRAM</p>"]}, "correct_response": ["c"], "section": "", "question_plain": "What type of SRAM is the following Verilog code modelling?\t    always @(posedge clk) begin\n        if (write_en) begin\n\t    ram[address] &lt;= data_in;\n\tend\n    end\n    assign data_out = ram[address];", "related_lectures": [{"_class": "lecture", "id": 28294250, "title": "Action Time - Single Port Async Read SRAM", "created": "2021-09-01T14:49:13Z", "is_published": true, "asset": {"_class": "asset", "id": 36396066, "asset_type": "Video", "title": "10.02_Action_Time_Single_Port_Async_Read_SRAM.mp4", "created": "2021-09-23T10:21:48Z"}, "object_index": 173, "url": "/course/verilog-hdl-fundamentals-for-digital-design-and-verification/learn/lecture/28294250"}]}, {"_class": "assessment", "id": 59634534, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What Verilog command should you use to read the following data an initialize a 12bit wide ROM with program_mem.txt?</p><pre class=\"prettyprint linenums\">00001111_110000111010\n10001110_110000101110\n01001110_110000111011\n01011110_010000101110\n10011011_011000011110</pre>", "relatedLectureIds": ["28294596"], "feedbacks": ["$readmemh will process the input data as hexadecimal values so each 0/1 will be represented on 4bit. This is NOT what we want.", "Although you can use $fscanf this will make your life a bit harder as you need to add extra code. Verilog has easier ways for doing this.", "CORRECT! The $readmemb will process each line as binary data and will also remove the '_' characters.."], "answers": ["<p>$readmemh</p>", "<p>$fscanf</p>", "<p>$readmemb</p>"]}, "correct_response": ["c"], "section": "", "question_plain": "What Verilog command should you use to read the following data an initialize a 12bit wide ROM with program_mem.txt?00001111_110000111010\n10001110_110000101110\n01001110_110000111011\n01011110_010000101110\n10011011_011000011110", "related_lectures": [{"_class": "lecture", "id": 28294596, "title": "Action Time - Single Port Sync Read ROM", "created": "2021-09-01T15:03:50Z", "is_published": true, "asset": {"_class": "asset", "id": 36396074, "asset_type": "Video", "title": "10.05_Action_Time_Ringle_Port_Sync_Read_ROM.mp4", "created": "2021-09-23T10:22:41Z"}, "object_index": 176, "url": "/course/verilog-hdl-fundamentals-for-digital-design-and-verification/learn/lecture/28294596"}]}]};
+    var correct = 0;
+    var total = 0;
+    const questionData = quizData.questions
+    const passPercent = quizData.pass_percent
+    function kiemTraDapAn(correctMuti, choise) {
+      // Chuyển đổi các số trong choise thành chữ cái tương ứng
+      const choiseLetters = choise.map(num => String.fromCharCode(parseInt(num) + 'a'.charCodeAt(0)));
+      console.log('choiseLetters',choiseLetters)
+      // Kiểm tra điều kiện:
+      // 1. Chiều dài hai mảng phải bằng nhau
+      // 2. Tất cả các phần tử trong choiseLetters phải có trong correctMuti
+      if (
+        choiseLetters.length === correctMuti.length &&
+        choiseLetters.every(c => correctMuti.includes(c))
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    function main() {
+      total = questionData.length;
+
+      var questions = [];
+      for (var i = 0; i < questionData.length; i++) {
+        var question = questionData[i];
+        var questionText = question.prompt.question;
+        var answers = question.prompt.answers;
+        var correctAnswer = question.correct_response[0];
+        var correctMuti = question.correct_response;
+        var correctAnswerText = answers[correctAnswer.charCodeAt(0) - 97];
+        var questionObj = {
+          question: questionText,
+          correctAnswer: correctAnswerText,
+          answers: answers,
+          id: question.id,
+          explanation: question.prompt.explanation,
+          correctMuti
+
+        };
+        questions.push(questionObj);
+      }
+      console.log(questions.filter(i => i.correctMuti.length > 1))
+
+      updateScore();
+
+      // display the questions
+      var questionsContainer = document.getElementById("quiz-container");
+      for (var i = 0; i < questions.length; i++) {
+        var question = questions[i];
+        var questionElement = document.createElement("form");
+        questionElement.className = "question";
+        questionElement.innerHTML =
+          "<span>Question " +
+          (i + 1) +
+          ":</span>" +
+          '<div class="question-prompt">' +
+          question.question +
+          "</div>";
+        questionElement.id = question.id;
+        questionElement.classList.add("quiz-container");
+        var answersElement = document.createElement("ul");
+        answersElement.className = "answers";
+        console.log('question.correctMuti', question.correctMuti.length)
+        if (question.correctMuti.length > 1) {
+          for (var j = 0; j < question.answers.length; j++) {
+            var answer = question.answers[j];
+            var answerElement = document.createElement("li");
+            answerElement.className = "answer";
+            answerElement.innerHTML =
+              '<label for="input-' +
+              question.id +
+              "-" +
+              j +
+              '"><div onclick="select2(' +
+              question.id +
+              ", " +
+              j +
+              ')"><input id="input-' +
+              question.id +
+              "-" +
+              j +
+              '" type="checkbox" name="question' +
+              i +
+              '" value="' +
+              j +
+              '">' +
+              answer +
+              "</input></div></label>";
+            answerElement.classList.add("question-answer");
+            answersElement.appendChild(answerElement);
+          }
+        } else {
+          for (var j = 0; j < question.answers.length; j++) {
+            var answer = question.answers[j];
+            var answerElement = document.createElement("li");
+            answerElement.className = "answer";
+            answerElement.innerHTML =
+              '<label for="input-' +
+              question.id +
+              "-" +
+              j +
+              '"><div onclick="select(' +
+              question.id +
+              ", " +
+              j +
+              ')"><span></span><input id="input-' +
+              question.id +
+              "-" +
+              j +
+              '" type="radio" name="question' +
+              i +
+              '" value="' +
+              j +
+              '">' +
+              answer +
+              "</input></div></label>";
+            answerElement.classList.add("question-answer");
+            answersElement.appendChild(answerElement);
+          }
+        }
+        questionElement.appendChild(answersElement);
+
+        // add a submit button
+        var submitButton = document.createElement("button");
+        submitButton.className = "submit";
+        submitButton.innerHTML = "Submit";
+        submitButton.classList.add("submit-button");
+
+        submitButton.addEventListener("click", function (e) {
+          e.preventDefault();
+          var questionElement = e.target.parentElement;
+          var questionId = questionElement.id;
+          var question = questions.filter(function (q) {
+            return q.id == questionId;
+          })[0];
+
+          // set the border color of all answers to black
+          var answers = questionElement.getElementsByClassName("answer");
+          for (var i = 0; i < answers.length; i++) {
+            console.log(answers[i]);
+            answers[i].children[0].style.borderColor = "#1c1d1f";
+          }
+
+          var answer = questionElement.querySelector(
+            'input[type="radio"]:checked'
+          );
+          var mutilanswer = questionElement.querySelectorAll(
+            'input[type="checkbox"]:checked'
+          );
+          if (answer) {
+            var answerIndex = answer.value;
+            var answerText = question.answers[answerIndex];
+            if (answerText == question.correctAnswer) {
+              answer.parentElement.parentElement.style.borderColor =
+                "limegreen";
+              // alert("Correct!");
+              correct++;
+              updateScore();
+              questionElement.innerHTML += question.explanation
+
+            } else {
+              answer.parentElement.parentElement.style.borderColor = "red";
+              // alert("Incorrect!");
+            }
+          }
+          if (mutilanswer) {
+            var answerIndex = [...mutilanswer].map(a => a.value);
+
+            if (kiemTraDapAn(question.correctMuti, answerIndex)) {
+              [...mutilanswer].map(item => {
+                item.parentElement.parentElement.style.borderColor =
+                "limegreen";
+              })
+              // alert("Correct!");
+              correct++;
+              updateScore();
+              questionElement.innerHTML += question.explanation
+            } else {
+              [...mutilanswer].map(item => {
+                item.parentElement.parentElement.style.borderColor =
+                "red";
+              })
+            }
+            // var answerText = question.answers[answerIndex];
+            // if (answerText == question.correctAnswer) {
+            //   answer.parentElement.parentElement.style.borderColor =
+            //     "limegreen";
+            //   // alert("Correct!");
+            //   correct++;
+            //   updateScore();
+            //   questionElement.innerHTML += question.explanation
+
+            // } else {
+            //   answer.parentElement.parentElement.style.borderColor = "red";
+            //   // alert("Incorrect!");
+            // }
+          }
+          // else {
+          //   alert("Please select an answer.");
+          // }
+
+        });
+
+        // add button
+        questionElement.appendChild(submitButton);
+
+        questionsContainer.appendChild(questionElement);
+      }
+    }
+
+    function select(question, answer) {
+      var questionElement = document.getElementById(question);
+      var answers = questionElement.getElementsByClassName("answer");
+      for (var i = 0; i < answers.length; i++) {
+        var span = answers[i].children[0].children[0].children[0];
+        var input = answers[i].children[0].children[0].children[1];
+        span.classList.remove("selected");
+        input.checked = false;
+      }
+      var span = answers[answer].children[0].children[0].children[0];
+      var input = answers[answer].children[0].children[0].children[1];
+      span.classList.add("selected");
+      input.checked = true;
+    }
+    function select2(question, answer) {
+      var questionElement = document.getElementById(question);
+      var answers = questionElement.getElementsByClassName("answer");
+      // for (var i = 0; i < answers.length; i++) {
+      //   var span = answers[i].children[0].children[0].children[0];
+      //   var input = answers[i].children[0].children[0].children[1];
+      //   if(input.checked){
+      //     span.classList.remove("selected");
+      //     input.checked = false;
+      //   }
+
+      // }
+      // var span = answers[answer].children[0].children[0].children[0];
+      // var input = answers[answer].children[0].children[0].children[1];
+      // span.classList.add("selected");
+      // input.checked = true;
+    }
+    function updateScore() {
+      var scoreElem = document.getElementById("score");
+      const score = (correct / total) * 100;
+      scoreElem.innerHTML = "Score: " + score + "/" + passPercent + "%";
+    }
+  </script>
+</body>
+
+</html>

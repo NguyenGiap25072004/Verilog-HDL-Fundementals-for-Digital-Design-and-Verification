@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz</title>
+
+  <style>
+    body {
+      font-family: sf pro text, -apple-system, BlinkMacSystemFont, Roboto,
+        segoe ui, Helvetica, Arial, sans-serif, apple color emoji,
+        segoe ui emoji, segoe ui symbol;
+      font-weight: 400;
+      line-height: 22.4px;
+      font-size: 16px;
+    }
+
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    ul,
+    ol {
+      font-size: 16px;
+      font-weight: 400;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      max-width: none;
+    }
+
+    code {
+      background-color: #fff;
+      border: 1px solid #d1d7dc;
+      color: #b4690e;
+      font-size: 90%;
+      padding: 0.2rem 0.4rem;
+    }
+
+    .quiz-content {
+      padding: 2.4rem;
+      word-break: break-word;
+      max-width: 86rem;
+      margin: 0 auto;
+    }
+
+    .quiz-container {
+      margin: 0 auto;
+      max-width: 84rem;
+      padding: 0;
+    }
+
+    .question {
+      margin-bottom: 5rem;
+    }
+
+    .question span {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .question-prompt {
+      margin-top: 0.8rem;
+      font-weight: 700;
+    }
+
+    .question-answer {
+      margin-top: 1.6rem;
+      padding-left: 0;
+      box-sizing: border-box;
+    }
+
+    .question-answer label {
+      max-width: 80rem;
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      min-width: 18rem;
+      border: solid #1c1d1f 2px;
+    }
+
+    .question-answer div {
+      padding: 0.5rem;
+      width: 100%;
+    }
+
+    .question-answer div:hover {
+      background-color: #f5f5f5;
+    }
+
+    /* .question-answer input {
+      display: none;
+    } */
+
+    .question-answer span {
+      width: 1rem;
+      height: 1rem;
+      margin-right: 1.6rem;
+      top: 0;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+      border: 0.2rem solid #1c1d1f;
+      position: relative;
+    }
+
+    .selected {
+      background: #1c1d1f;
+      box-shadow: 0 0 0 0.4rem #fff inset;
+    }
+
+    .score {
+      position: fixed;
+      background-color: #b4690e;
+      padding: 10px;
+      color: white;
+    }
+  </style>
+</head>
+
+<body onload="main()">
+  <div id="score" class="score">
+    <span>Score: N/A of N/A</span>
+  </div>
+  <div id="quiz-container" class="quiz-content"></div>
+
+  <script>
+    const quizData = {"pass_percent": 70, "questions": [{"_class": "assessment", "id": 59591908, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What is the main utility of Verilog functions?</p>", "relatedLectureIds": ["28278556"], "feedbacks": ["Clock signal generation requires the # (delay operator) which is illegal inside Verilog functions.", "The main utility of Verilog functions is code reuse. They enhance the readability and maintainability of your code.", "The hierarchical organization of Verilog entities is done using Verilog modules. Functions can be nested but this is not their main purpose."], "answers": ["<p>Verilog functions can be used to generate clock signals for synchronous circuits.</p>", "<p>To encapsulate reusable code and simplify stimulus generation, output processing and design implementation.</p>", "<p>Verilog functions provide a mechanism for hierarchical organization of design entities.</p>"]}, "correct_response": ["b"], "section": "", "question_plain": "What is the main utility of Verilog functions?", "related_lectures": [{"_class": "lecture", "id": 28278556, "title": "Verilog Functions Basics", "created": "2021-08-31T18:59:34Z", "is_published": true, "asset": {"_class": "asset", "id": 36395960, "asset_type": "Video", "title": "09.01_Basics_of_Verilog_Functions.mp4", "created": "2021-09-23T10:15:35Z"}, "object_index": 158, "url": "/course/verilog-hdl-fundamentals-for-digital-design-and-verification/learn/lecture/28278556"}]}, {"_class": "assessment", "id": 59592194, "assessment_type": "multiple-choice", "prompt": {"question": "<p>Which of the following Verilog code snippets calculates the sum of three 8bit input numbers?</p>", "relatedLectureIds": ["28278642"], "feedbacks": ["The inputs should be 8bit wide. These are 3bit wide.", "Continuous assignments are not allowed inside Verilog functions.", "Correct! Note that the output has to be 10bit wide so the result of the addition is not truncated."], "answers": ["<p>function [7:0] adder(input [2:0] a, b, c);</p><p>&nbsp; &nbsp; &nbsp; &nbsp;adder = a + b + c;</p><p>endfunction</p>", "<p>function [7:0] adder(input [7:0] a, input [7:0] b, input [7:0] c);</p><p>&nbsp; &nbsp; &nbsp; assign&nbsp;adder = a + b + c;</p><p>endfunction</p>", "<p>function [9:0] adder(input [7:0] a, input [7:0] b, input [7:0] c);</p><p>&nbsp; &nbsp; &nbsp; adder = a + b + c;</p><p>endfunction</p>"]}, "correct_response": ["c"], "section": "", "question_plain": "Which of the following Verilog code snippets calculates the sum of three 8bit input numbers?", "related_lectures": [{"_class": "lecture", "id": 28278642, "title": "Action Time - Verilog Functions2", "created": "2021-08-31T19:04:55Z", "is_published": true, "asset": {"_class": "asset", "id": 36395962, "asset_type": "Video", "title": "09.03_Action_Time_Verilog_Functions2.mp4", "created": "2021-09-23T10:15:38Z"}, "object_index": 160, "url": "/course/verilog-hdl-fundamentals-for-digital-design-and-verification/learn/lecture/28278642"}]}, {"_class": "assessment", "id": 59599882, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What Verilog keyword is mandatory if you want to declare a recursive (re-entrant) function?</p>", "relatedLectureIds": ["28278660"], "feedbacks": ["Verilog functions are static by default. This is the opposite of a recursive function.", "CORRECT: Verilog functions are static by default so you need to use the automatic keyword for recursive functions."], "answers": ["<p>none</p>", "<p>automatic</p>"]}, "correct_response": ["b"], "section": "", "question_plain": "What Verilog keyword is mandatory if you want to declare a recursive (re-entrant) function?", "related_lectures": [{"_class": "lecture", "id": 28278660, "title": "Discover Verilog Recursive Functions", "created": "2021-08-31T19:06:39Z", "is_published": true, "asset": {"_class": "asset", "id": 36395982, "asset_type": "Video", "title": "09.04_Discover_Verilog_Recursive_Functions.mp4", "created": "2021-09-23T10:16:34Z"}, "object_index": 161, "url": "/course/verilog-hdl-fundamentals-for-digital-design-and-verification/learn/lecture/28278660"}]}, {"_class": "assessment", "id": 59600898, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What is the main difference between a Verilog functions and a tasks?</p>", "relatedLectureIds": ["28278778"], "feedbacks": ["Even though a task cannot use the return keyword it can have multiple outputs to compensate for it.", "CORRECT! If your code doesn't depend on the time domain then you can use either a function or a task.", "A function can have multiple inputs. Also you can concatenate multiple values to be returned in the same time by the function."], "answers": ["<p>A function can return a value, while a task cannot. </p>", "<p>Tasks can have delays and process events / watch variables in the time domain while functions cannot.</p>", "<p>A task can have multiple inputs and outputs, while a function can only have one input and one output.</p>"]}, "correct_response": ["b"], "section": "", "question_plain": "What is the main difference between a Verilog functions and a tasks?", "related_lectures": [{"_class": "lecture", "id": 28278778, "title": "Verilog Tasks Basics", "created": "2021-08-31T19:12:42Z", "is_published": true, "asset": {"_class": "asset", "id": 36395996, "asset_type": "Video", "title": "09.08_Basics_of_Verilog_Tasks.mp4", "created": "2021-09-23T10:17:25Z"}, "object_index": 165, "url": "/course/verilog-hdl-fundamentals-for-digital-design-and-verification/learn/lecture/28278778"}]}, {"_class": "assessment", "id": 59632570, "assessment_type": "multiple-choice", "prompt": {"question": "<p>Which statement accurately describes Verilog self-checking testbenches?</p>", "relatedLectureIds": ["28279072"], "feedbacks": ["Self-checking testbenches can handle great complexity verification scenarios to validate DUT behavior.", "Self-checking testbenches can handle any behavioral complexity of the DUT. Most of the chips around us  use self-checking testbenches in the Verification stage.", "Manual verification is error prone and can handle only simple verification scenarios."], "answers": ["<p>Self-checking testbenches are limited to verifying basic functionality and cannot handle complex verification scenarios.</p>", "<p>Self-checking testbenches automatically verify the design under test (DUT) behavior without requiring manual intervention.</p>", "<p>Self-checking testbenches are usually less reliable than manual verification.</p>"]}, "correct_response": ["b"], "section": "", "question_plain": "Which statement accurately describes Verilog self-checking testbenches?", "related_lectures": [{"_class": "lecture", "id": 28279072, "title": "Discover Automated Verification", "created": "2021-08-31T19:28:33Z", "is_published": true, "asset": {"_class": "asset", "id": 36396016, "asset_type": "Video", "title": "09.13_Discover_Automated_Verification.mp4", "created": "2021-09-23T10:18:46Z"}, "object_index": 170, "url": "/course/verilog-hdl-fundamentals-for-digital-design-and-verification/learn/lecture/28279072"}]}]};
+    var correct = 0;
+    var total = 0;
+    const questionData = quizData.questions
+    const passPercent = quizData.pass_percent
+    function kiemTraDapAn(correctMuti, choise) {
+      // Chuyển đổi các số trong choise thành chữ cái tương ứng
+      const choiseLetters = choise.map(num => String.fromCharCode(parseInt(num) + 'a'.charCodeAt(0)));
+      console.log('choiseLetters',choiseLetters)
+      // Kiểm tra điều kiện:
+      // 1. Chiều dài hai mảng phải bằng nhau
+      // 2. Tất cả các phần tử trong choiseLetters phải có trong correctMuti
+      if (
+        choiseLetters.length === correctMuti.length &&
+        choiseLetters.every(c => correctMuti.includes(c))
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    function main() {
+      total = questionData.length;
+
+      var questions = [];
+      for (var i = 0; i < questionData.length; i++) {
+        var question = questionData[i];
+        var questionText = question.prompt.question;
+        var answers = question.prompt.answers;
+        var correctAnswer = question.correct_response[0];
+        var correctMuti = question.correct_response;
+        var correctAnswerText = answers[correctAnswer.charCodeAt(0) - 97];
+        var questionObj = {
+          question: questionText,
+          correctAnswer: correctAnswerText,
+          answers: answers,
+          id: question.id,
+          explanation: question.prompt.explanation,
+          correctMuti
+
+        };
+        questions.push(questionObj);
+      }
+      console.log(questions.filter(i => i.correctMuti.length > 1))
+
+      updateScore();
+
+      // display the questions
+      var questionsContainer = document.getElementById("quiz-container");
+      for (var i = 0; i < questions.length; i++) {
+        var question = questions[i];
+        var questionElement = document.createElement("form");
+        questionElement.className = "question";
+        questionElement.innerHTML =
+          "<span>Question " +
+          (i + 1) +
+          ":</span>" +
+          '<div class="question-prompt">' +
+          question.question +
+          "</div>";
+        questionElement.id = question.id;
+        questionElement.classList.add("quiz-container");
+        var answersElement = document.createElement("ul");
+        answersElement.className = "answers";
+        console.log('question.correctMuti', question.correctMuti.length)
+        if (question.correctMuti.length > 1) {
+          for (var j = 0; j < question.answers.length; j++) {
+            var answer = question.answers[j];
+            var answerElement = document.createElement("li");
+            answerElement.className = "answer";
+            answerElement.innerHTML =
+              '<label for="input-' +
+              question.id +
+              "-" +
+              j +
+              '"><div onclick="select2(' +
+              question.id +
+              ", " +
+              j +
+              ')"><input id="input-' +
+              question.id +
+              "-" +
+              j +
+              '" type="checkbox" name="question' +
+              i +
+              '" value="' +
+              j +
+              '">' +
+              answer +
+              "</input></div></label>";
+            answerElement.classList.add("question-answer");
+            answersElement.appendChild(answerElement);
+          }
+        } else {
+          for (var j = 0; j < question.answers.length; j++) {
+            var answer = question.answers[j];
+            var answerElement = document.createElement("li");
+            answerElement.className = "answer";
+            answerElement.innerHTML =
+              '<label for="input-' +
+              question.id +
+              "-" +
+              j +
+              '"><div onclick="select(' +
+              question.id +
+              ", " +
+              j +
+              ')"><span></span><input id="input-' +
+              question.id +
+              "-" +
+              j +
+              '" type="radio" name="question' +
+              i +
+              '" value="' +
+              j +
+              '">' +
+              answer +
+              "</input></div></label>";
+            answerElement.classList.add("question-answer");
+            answersElement.appendChild(answerElement);
+          }
+        }
+        questionElement.appendChild(answersElement);
+
+        // add a submit button
+        var submitButton = document.createElement("button");
+        submitButton.className = "submit";
+        submitButton.innerHTML = "Submit";
+        submitButton.classList.add("submit-button");
+
+        submitButton.addEventListener("click", function (e) {
+          e.preventDefault();
+          var questionElement = e.target.parentElement;
+          var questionId = questionElement.id;
+          var question = questions.filter(function (q) {
+            return q.id == questionId;
+          })[0];
+
+          // set the border color of all answers to black
+          var answers = questionElement.getElementsByClassName("answer");
+          for (var i = 0; i < answers.length; i++) {
+            console.log(answers[i]);
+            answers[i].children[0].style.borderColor = "#1c1d1f";
+          }
+
+          var answer = questionElement.querySelector(
+            'input[type="radio"]:checked'
+          );
+          var mutilanswer = questionElement.querySelectorAll(
+            'input[type="checkbox"]:checked'
+          );
+          if (answer) {
+            var answerIndex = answer.value;
+            var answerText = question.answers[answerIndex];
+            if (answerText == question.correctAnswer) {
+              answer.parentElement.parentElement.style.borderColor =
+                "limegreen";
+              // alert("Correct!");
+              correct++;
+              updateScore();
+              questionElement.innerHTML += question.explanation
+
+            } else {
+              answer.parentElement.parentElement.style.borderColor = "red";
+              // alert("Incorrect!");
+            }
+          }
+          if (mutilanswer) {
+            var answerIndex = [...mutilanswer].map(a => a.value);
+
+            if (kiemTraDapAn(question.correctMuti, answerIndex)) {
+              [...mutilanswer].map(item => {
+                item.parentElement.parentElement.style.borderColor =
+                "limegreen";
+              })
+              // alert("Correct!");
+              correct++;
+              updateScore();
+              questionElement.innerHTML += question.explanation
+            } else {
+              [...mutilanswer].map(item => {
+                item.parentElement.parentElement.style.borderColor =
+                "red";
+              })
+            }
+            // var answerText = question.answers[answerIndex];
+            // if (answerText == question.correctAnswer) {
+            //   answer.parentElement.parentElement.style.borderColor =
+            //     "limegreen";
+            //   // alert("Correct!");
+            //   correct++;
+            //   updateScore();
+            //   questionElement.innerHTML += question.explanation
+
+            // } else {
+            //   answer.parentElement.parentElement.style.borderColor = "red";
+            //   // alert("Incorrect!");
+            // }
+          }
+          // else {
+          //   alert("Please select an answer.");
+          // }
+
+        });
+
+        // add button
+        questionElement.appendChild(submitButton);
+
+        questionsContainer.appendChild(questionElement);
+      }
+    }
+
+    function select(question, answer) {
+      var questionElement = document.getElementById(question);
+      var answers = questionElement.getElementsByClassName("answer");
+      for (var i = 0; i < answers.length; i++) {
+        var span = answers[i].children[0].children[0].children[0];
+        var input = answers[i].children[0].children[0].children[1];
+        span.classList.remove("selected");
+        input.checked = false;
+      }
+      var span = answers[answer].children[0].children[0].children[0];
+      var input = answers[answer].children[0].children[0].children[1];
+      span.classList.add("selected");
+      input.checked = true;
+    }
+    function select2(question, answer) {
+      var questionElement = document.getElementById(question);
+      var answers = questionElement.getElementsByClassName("answer");
+      // for (var i = 0; i < answers.length; i++) {
+      //   var span = answers[i].children[0].children[0].children[0];
+      //   var input = answers[i].children[0].children[0].children[1];
+      //   if(input.checked){
+      //     span.classList.remove("selected");
+      //     input.checked = false;
+      //   }
+
+      // }
+      // var span = answers[answer].children[0].children[0].children[0];
+      // var input = answers[answer].children[0].children[0].children[1];
+      // span.classList.add("selected");
+      // input.checked = true;
+    }
+    function updateScore() {
+      var scoreElem = document.getElementById("score");
+      const score = (correct / total) * 100;
+      scoreElem.innerHTML = "Score: " + score + "/" + passPercent + "%";
+    }
+  </script>
+</body>
+
+</html>
