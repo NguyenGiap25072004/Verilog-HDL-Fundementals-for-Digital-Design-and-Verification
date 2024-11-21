@@ -1,0 +1,11 @@
+<p><strong>Please elaborate the blocking and non blocking statement concept. Why non-blocking operator is used on sequential logic? What are the effects if we use blocking operator in sequential logic instead of non-blocking operator and vice versa in combinational logic?</strong></p><p>(thanks to Manish Kumar Chandela) </p><p><br></p><p>Here is how to differentiate between where/when to use blocking/non-blocking assignments in your design.</p><p><br></p><p><strong>SEQ1</strong>: Blocking procedural assignment. Expression is evaluated and assigned when the statement is encountered. In a begin—end sequential statement sequence, execution of the next statement is blocked until the current assignment is complete.</p><pre class="prettyprint linenums">begin // SEQ1
+    a=b;
+    b=a;
+end</pre><p>In SEQ1 the first assignment changes a before the second assignment reads a.</p><p><br></p><p><strong>SEQ2</strong>: Non-blocking procedural assignment. The expression is evaluated when the statement is encountered, and assignment is postponed until the end of the simulation time-step. In a begin—end sequential statement sequence, the execution</p><p>of the next statement is not blocked; and will be evaluated before the assignment is complete.</p><pre class="prettyprint linenums">begin // SEQ2
+    a&lt;=b;
+    b&lt;=a;
+end</pre><p>In SEQ2 both assignments will be evaluated before a or b changes.</p><p><br></p><p><strong>MODELING TIP (industry recommendation)</strong> for <strong>best synthesis results with most tools</strong>: To avoid potential simulation race conditions in zero-delay models:</p><p><strong>• Use blocking assignments ( = ) to model combinational logic.</strong></p><p><strong>• Use non-blocking assignments ( &lt;= ) to model sequential logic.</strong></p><pre class="prettyprint linenums">always @(*) begin // combinational
+    variable = expression;
+end</pre><p><br></p><pre class="prettyprint linenums">always @(posedge clk) begin // sequential
+    variable &lt;= expression;
+end</pre><p><br></p><p>Please note that if you don't respect the above rules you may have a whole universe of errors that are very hard to debug.</p>

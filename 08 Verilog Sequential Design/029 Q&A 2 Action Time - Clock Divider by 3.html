@@ -1,0 +1,13 @@
+<p><strong>What are the differences between input/output and reg/wire signals outside of the in/ouput instantiation? Why use them? Wow to use them?</strong></p><p>(thanks to Minqing Liang)</p><pre class="prettyprint linenums">module clk_gen(
+input ....,
+output ....
+);
+reg ...;
+wire....;
+endmodule</pre><p><br></p><p>I'll give an answer by using a simple analogy.</p><p><br></p><p>A basic digital circuit has inputs and outputs which are visible from the exterior (like a micro-controller). Although the micro-controller could have 8 pins, its internal structure may have thousands of logic gates connected one to each other to obtain the desired functionality. Thus the input/output ports of a module are simply a way for digital signals 1/0 to travel TO and FROM that module. The internal structure of the module is a collection of elements that are connected with the inputs and between them for obtaining a desired functionality.</p><p><br></p><p>For our clock_div_3 circuit we have an internal structure composed of 3 flip-flops, an AND and an OR gate connected in certain way using connections that are also called wires. If the circuit was more complex, then we would have even more internal elements for this module. According to our schematic we use the <strong>reg type</strong> to model flip-flops and the <strong>wire type</strong> to model connections between them.</p><p><br></p><p><strong>When to use the Verilog reg type?</strong></p><p>-&gt; <strong>sequential logic</strong> (the situation from this exercise)</p><pre class="prettyprint linenums">reg rega;
+always @(posedge clk) begin
+    rega &lt;= sig1 | sig2;
+end</pre><p><br></p><p>-&gt;<strong> combinational logic</strong> (NOT the situation from this exercise)</p><pre class="prettyprint linenums">reg rega;
+always @(a OR b) begin
+    rega = a | b;
+end</pre><p><br></p><p><strong>When to use the Verilog wire type?</strong></p><p>-&gt; <strong>connections </strong>between logic elements and modules</p><p>-&gt; <strong>combinational logic using continuous assignments</strong></p><p>wire wirea;</p><p>assign wirea = a | b;</p><p><br></p><p>I hope this answer provided more clarity. Please give this concepts some time to settle and continue with the exercises from the other chapter and you will definitely master them in the end.</p>
